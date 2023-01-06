@@ -21,19 +21,10 @@ class _CounterPageState extends State<CounterPage> {
     });
 
     return Scaffold(
-      body: SafeArea(
-        child: Center(
+      body: Center(
           child: Container(
-            child: Text("Counter Value $count"),
-          ),
-        ),
-      ),
-      floatingActionButton: FloatingActionButton(
-        onPressed: () =>
-            Provider.of<CountNumber>(context, listen: false).updateCount(),
-        tooltip: 'Increment',
-        child: Icon(Icons.add),
-      ),
+        child: Text("Counter Value $count"),
+      )),
     );
   }
 }

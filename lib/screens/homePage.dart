@@ -1,6 +1,8 @@
+import 'package:doctor/common/categories_card.dart';
 import 'package:doctor/common/doctorCard.dart';
 import 'package:doctor/constant/colors.dart';
 import 'package:doctor/mock/doctorList.dart';
+import 'package:doctor/screens/counter_page.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/src/foundation/key.dart';
 import 'package:flutter/src/widgets/framework.dart';
@@ -111,11 +113,27 @@ class _HomePageState extends State<HomePage> {
           const SizedBox(
             height: 10,
           ),
+          const Padding(
+            padding: EdgeInsets.all(8.0),
+            child: Text(
+              "Categories",
+              style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
+            ),
+          ),
+          Container(height: 150, child: const CategoriesCard()),
           const Text(
             "Available Doctors",
             style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
           ),
-          Container(height: 200, child: DoctorCard())
+          Flexible(
+              child: InkWell(
+                  onTap: () => Navigator.pushReplacement(
+                        context,
+                        MaterialPageRoute(
+                          builder: (context) => CounterPage(),
+                        ),
+                      ),
+                  child: DoctorCard())),
         ],
       )),
     );
