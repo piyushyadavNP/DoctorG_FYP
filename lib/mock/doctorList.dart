@@ -1,7 +1,7 @@
 List doctorList = [
   {
-    'name': 'Mac',
-    'specialities': 'Pediatric',
+    'name': 'Mamit Pradhan',
+    'specialities': 'Sr Gynecologist',
   },
   {
     'name': 'Mac',

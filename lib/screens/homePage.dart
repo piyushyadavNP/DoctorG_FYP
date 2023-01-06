@@ -44,7 +44,7 @@ class _HomePageState extends State<HomePage> {
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: const [
                       Text(
-                        "Hi Elly !",
+                        "Hi Mamit !",
                         style: TextStyle(
                             color: Colors.white,
                             fontSize: 20,

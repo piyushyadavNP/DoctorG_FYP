@@ -33,8 +33,8 @@ class MyApp extends StatelessWidget {
           // is not restarted.
           primarySwatch: Colors.blue,
         ),
-        initialRoute: "/nfc",
-        routes: 
+        initialRoute: "/home",
+        routes: {
           '/home': (context) => const HomePage(),
           '/count': (context) => const CounterPage(),
         },
