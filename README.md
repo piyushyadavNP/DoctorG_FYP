@@ -15,6 +15,6 @@ For help getting started with Flutter development, view the
 [online documentation](https://docs.flutter.dev/), which offers tutorials,
 samples, guidance on mobile development, and a full API reference.
 ### Landing Page 
-![Screenshot_1673026677](https://user-images.githubusercontent.com/60354300/211067507-e84f191d-0e5b-4245-85d7-39ccdb529e2c.png =250x)
+![Screenshot_1673026677](https://user-images.githubusercontent.com/60354300/211067507-e84f191d-0e5b-4245-85d7-39ccdb529e2c.png =250x250)
 
 ### Book Appointment Page
