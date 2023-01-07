@@ -1,5 +1,6 @@
 import 'dart:developer';
 
+import 'package:doctor/common/time_picker.dart';
 import 'package:doctor/provider/counter.dart';
 import 'package:doctor/screens/appointment_page.dart';
 import 'package:doctor/screens/counter_page.dart';
@@ -25,6 +26,7 @@ class MyApp extends StatelessWidget {
         debugShowCheckedModeBanner: false,
         title: 'Flutter Demo',
         theme: ThemeData(
+          // timePickerTheme: timePickerTheme,
           // This is the theme of your application.
           //
           // Try running your application with "flutter run". You'll see the
