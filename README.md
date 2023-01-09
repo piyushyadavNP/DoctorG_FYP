@@ -17,4 +17,4 @@ samples, guidance on mobile development, and a full API reference.
 ### Landing Page 
 <img src="https://user-images.githubusercontent.com/60354300/211067507-e84f191d-0e5b-4245-85d7-39ccdb529e2c.png" alt="drawing" style="width:400px;"/>
 
-### Book Appointment Page
+###Appointment Page
