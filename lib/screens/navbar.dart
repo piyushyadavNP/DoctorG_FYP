@@ -50,24 +50,23 @@ class _MainPageState extends State<MainPage> with TickerProviderStateMixin {
             unselectedItemColor: white.withOpacity(0.4),
             selectedFontSize: 12,
             unselectedFontSize: 12,
-             
             items: [
               BottomNavigationBarItem(
-                  label: "Today",
+                  label: "Home",
                   icon: Icon(
-                    Icons.today,
+                    Icons.home,
                     color: white.withOpacity(0.4),
                   )),
               BottomNavigationBarItem(
-                  label: "Meditate",
+                  label: "Schedule",
                   icon: Icon(
-                    Icons.circle_outlined,
+                    Icons.calendar_month,
                     color: white.withOpacity(0.4),
                   )),
               BottomNavigationBarItem(
-                  label: "Sleep",
+                  label: "Profile",
                   icon: Icon(
-                    Icons.mode_night_outlined,
+                    Icons.person,
                     color: white.withOpacity(0.4),
                   )),
             ],

@@ -1,5 +1,6 @@
 import 'package:doctor/common/user_info_card.dart';
 import 'package:flutter/material.dart';
+import 'package:intl/intl.dart';
 import 'package:table_calendar/table_calendar.dart';
 
 class AppointmentPage extends StatefulWidget {
@@ -12,30 +13,31 @@ class AppointmentPage extends StatefulWidget {
 class _AppointmentPageState extends State<AppointmentPage> {
   DateTime _focusedDay = DateTime.now();
 
+  DateTime? _selectedDay;
+  CalendarFormat _calendarFormat = CalendarFormat.month;
+  TimeOfDay _time = const TimeOfDay(hour: 7, minute: 15);
+  TextEditingController dateTimeController = TextEditingController();
+
+  String? selectedTime;
   @override
   void initState() {
     _selectedDay = _focusedDay;
+    dateTimeController.text = "";
     super.initState();
   }
 
-  DateTime? _selectedDay;
-  DateTime? _rangeStart;
-  DateTime? _rangeEnd;
-  CalendarFormat _calendarFormat = CalendarFormat.month;
-  TimeOfDay _time = TimeOfDay(hour: 7, minute: 15);
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-        resizeToAvoidBottomInset: false,
-        body: SafeArea(
-            child: Column(
+      resizeToAvoidBottomInset: false,
+      body: SafeArea(
+        child: Column(
           children: [
             UserInfo(name: "Dr. Manohar Ray", profileIcon: false),
             const SizedBox(
               height: 40,
               child: Text("Select Your Date"),
             ),
-
             TableCalendar(
               rowHeight: 30,
               focusedDay: DateTime.now(),
@@ -70,21 +72,29 @@ class _AppointmentPageState extends State<AppointmentPage> {
                 DateTime.saturday
               ], // Disable According To Doctor's Availiability
             ),
-
-            Text("${_selectedDay}"),
+            Text("${DateFormat("yyyy-MM-dd").format(_selectedDay!)}"),
             Container(
-              height: MediaQuery.of(context).size.height * 0.1,
-              child: TimePickerDialog(
-                  initialEntryMode: TimePickerEntryMode.inputOnly,
-                  initialTime: TimeOfDay.now()),
+              margin: const EdgeInsets.all(10),
+              child: TextFormField(
+                readOnly: true,
+                controller: dateTimeController,
+                decoration: const InputDecoration(
+                    icon: Icon(Icons.timer), //icon of text field
+                    labelText: "Enter Time" //label text of field
+                    ),
+                onTap: () => _selectTime(),
+              ),
+            ),
+            Container(
+              width: MediaQuery.of(context).size.width * 0.9,
+              margin: const EdgeInsets.all(10),
+              child: ElevatedButton(
+                  onPressed: () {}, child: const Text("Book Appointment")),
             )
-
-            // ElevatedButton(
-            //   onPressed: _selectTime,
-            //   child: Text('SELECT TIME'),
-            // ),
           ],
-        )));
+        ),
+      ),
+    );
   }
 
   void _selectTime() async {
@@ -95,6 +105,7 @@ class _AppointmentPageState extends State<AppointmentPage> {
     if (newTime != null) {
       setState(() {
         _time = newTime;
+        dateTimeController.text = newTime.format(context);
       });
     }
   }
