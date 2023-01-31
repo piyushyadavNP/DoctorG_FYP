@@ -5,12 +5,17 @@ import 'package:doctor/provider/counter.dart';
 import 'package:doctor/screens/appointment_page.dart';
 import 'package:doctor/screens/counter_page.dart';
 import 'package:doctor/screens/homePage.dart';
+import 'package:doctor/screens/login_page.dart';
+import 'package:doctor/screens/signup_page.dart';
+import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
 import 'screens/navbar.dart';
 
-void main() {
+void main() async {
+  WidgetsFlutterBinding.ensureInitialized();
+  await Firebase.initializeApp();
   runApp(const MyApp());
 }
 
@@ -40,8 +45,9 @@ class MyApp extends StatelessWidget {
         ),
         initialRoute: "/",
         routes: {
-          '/': (context) => const MainPage(),
-          '/home': (context) => const HomePage(),
+          '/': (context) => const LoginPage(),
+          '/signup': (context) => const Signup(),
+          '/home': (context) => const MainPage(),
           '/count': (context) => const CounterPage(),
           '/book': (context) => const AppointmentPage()
         },
