@@ -1,3 +1,5 @@
+import 'package:firebase_auth/firebase_auth.dart';
+import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 
 import '../constant/colors.dart';
@@ -14,6 +16,7 @@ class UserInfo extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    User? user = FirebaseAuth.instance.currentUser;
     return Stack(children: [
       Card(
         margin: const EdgeInsets.all(10),
@@ -38,7 +41,7 @@ class UserInfo extends StatelessWidget {
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               Text(
-                "Hi $name",
+                "Hi ${user!.displayName}",
                 style: const TextStyle(
                     color: Colors.white,
                     fontSize: 20,
@@ -88,7 +91,12 @@ class UserInfo extends StatelessWidget {
                     icon: Image.asset(
                       "assets/man.png",
                     ),
-                    onPressed: () {},
+                    onPressed: () {
+                      FirebaseAuth.instance.signOut();
+                      if (FirebaseAuth.instance.currentUser == null) {
+                        Navigator.pushNamed(context, '/');
+                      }
+                    },
                   ),
                 ),
               ),

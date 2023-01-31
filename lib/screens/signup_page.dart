@@ -1,3 +1,5 @@
+import 'dart:developer';
+
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:firebase_database/firebase_database.dart';
@@ -222,17 +224,24 @@ class _SignupState extends State<Signup> {
   }
 
   Future<void> signUp() async {
-    final DatabaseReference databaseReference =
-        FirebaseDatabase.instance.ref("users");
-    UserCredential? userCredential = await FirebaseAuth.instance
-        .createUserWithEmailAndPassword(
-            email: _emailController.text, password: _paswordController.text);
-    databaseReference.child(userCredential.user!.uid).set({
-      "name":
-          _firstnameController.text.trim() + _lastnameController.text.trim(),
-      "email": _emailController.text.trim(),
-      "role": "User",
-    });
+    try {
+      final UserCredential userCredential;
+      final DatabaseReference databaseReference =
+          FirebaseDatabase.instance.ref("users");
+      userCredential = await FirebaseAuth.instance
+          .createUserWithEmailAndPassword(
+              email: _emailController.text, password: _paswordController.text);
+      userCredential.user!.updateDisplayName(
+          _firstnameController.text.trim() + _lastnameController.text.trim());
+      databaseReference.child(userCredential.user!.uid).set({
+        "name":
+            _firstnameController.text.trim() + _lastnameController.text.trim(),
+        "email": _emailController.text.trim(),
+        "role": "User",
+      });
+    } catch (ex) {
+      log(ex.toString());
+    }
   }
 
   String? validateButton(String? value) {
