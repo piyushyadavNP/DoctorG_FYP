@@ -4,8 +4,6 @@
 
 import 'dart:convert';
 
-import 'package:firebase_database/firebase_database.dart';
-
 Doctors doctorsFromJson(String str) => Doctors.fromJson(json.decode(str));
 
 String doctorsToJson(Doctors data) => json.encode(data.toJson());
@@ -45,11 +43,4 @@ class Doctor {
         "name": name,
         "specialities": specialities,
       };
-
-  factory Doctor.fromSnapshot(DataSnapshot snapshot) {
-    Map data = Map.from(snapshot.value as Map);
-    return Doctor(
-        name: data["name"].toString(),
-        specialities: data["specialities"].toString());
-  }
 }

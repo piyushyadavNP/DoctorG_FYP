@@ -41,7 +41,7 @@ class UserInfo extends StatelessWidget {
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               Text(
-                "Hi ${user!.displayName}",
+                "Hi ${user != null ? user.displayName : ""}",
                 style: const TextStyle(
                     color: Colors.white,
                     fontSize: 20,

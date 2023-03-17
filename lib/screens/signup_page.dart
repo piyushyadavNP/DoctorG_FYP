@@ -1,8 +1,8 @@
 import 'dart:developer';
 
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_core/firebase_core.dart';
-import 'package:firebase_database/firebase_database.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/src/foundation/key.dart';
 import 'package:flutter/src/widgets/framework.dart';
@@ -67,7 +67,7 @@ class _SignupState extends State<Signup> {
                     "Already Have an account?",
                     style: TextStyle(
                         color: Colors.white.withOpacity(0.7), fontSize: 15),
-                  ),
+                  ),   
                   Padding(
                     padding: const EdgeInsets.only(left: 2.0),
                     child: GestureDetector(
@@ -225,20 +225,20 @@ class _SignupState extends State<Signup> {
 
   Future<void> signUp() async {
     try {
-      final UserCredential userCredential;
-      final DatabaseReference databaseReference =
-          FirebaseDatabase.instance.ref("users");
-      userCredential = await FirebaseAuth.instance
-          .createUserWithEmailAndPassword(
-              email: _emailController.text, password: _paswordController.text);
-      userCredential.user!.updateDisplayName(
-          _firstnameController.text.trim() + _lastnameController.text.trim());
-      databaseReference.child(userCredential.user!.uid).set({
-        "name":
-            _firstnameController.text.trim() + _lastnameController.text.trim(),
-        "email": _emailController.text.trim(),
-        "role": "User",
-      });
+      // final UserCredential userCredential;
+      // final CollectionReference databaseReference =
+      //     FirebaseFirestore.instance.collection("users");
+      // userCredential = await FirebaseAuth.instance
+      //     .createUserWithEmailAndPassword(
+      //         email: _emailController.text, password: _paswordController.text);
+      // userCredential.user!.updateDisplayName(
+      //     _firstnameController.text.trim() + _lastnameController.text.trim());
+      // databaseReference.child(userCredential.user!.uid).set({
+      //   "name":
+      //       _firstnameController.text.trim() + _lastnameController.text.trim(),
+      //   "email": _emailController.text.trim(),
+      //   "role": "User",
+      // });
     } catch (ex) {
       log(ex.toString());
     }
