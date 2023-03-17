@@ -8,6 +8,7 @@ class CategoriesCard extends StatelessWidget {
   CategoriesCard({super.key});
 
   final db = FirebaseFirestore.instance;
+
   @override
   Widget build(BuildContext context) {
     return StreamBuilder<QuerySnapshot>(
@@ -15,6 +16,7 @@ class CategoriesCard extends StatelessWidget {
         builder: (context, snapshot) {
           if (snapshot.hasData) {
             return ListView(
+              scrollDirection: Axis.horizontal,
               children: snapshot.data!.docs
                   .map((doc) => Card(
                         shape: RoundedRectangleBorder(
