@@ -1,12 +1,15 @@
+import 'dart:convert';
+import 'dart:developer';
+
 import 'package:doctor/mock/doctorList.dart';
-import 'package:flutter/cupertino.dart';
+import 'package:doctor/model/Doctors.dart';
+import 'package:firebase_database/firebase_database.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/src/foundation/key.dart';
-import 'package:flutter/src/widgets/framework.dart';
 
 class DoctorCard extends StatelessWidget {
-  const DoctorCard({Key? key}) : super(key: key);
+  DoctorCard({Key? key}) : super(key: key);
 
+  DatabaseReference dataBaseRefrence = FirebaseDatabase.instance.ref('doctor');
   @override
   Widget build(BuildContext context) {
     return ListView.builder(
