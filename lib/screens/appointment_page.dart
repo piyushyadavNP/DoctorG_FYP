@@ -1,6 +1,7 @@
 import 'dart:developer';
 
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:doctor/common/succes_info.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
@@ -126,11 +127,24 @@ class _AppointmentPageState extends State<AppointmentPage> {
     final db = FirebaseFirestore.instance;
     final user = FirebaseAuth.instance.currentUser;
     final date = DateFormat("yyyy-MM-dd").format(_selectedDay!);
-    await db.collection('appointmentDetails').add({
-      "userId": user!.uid,
-      "date": date,
-      "time": dateTimeController.text,
-      "doctor": widget.doctorName   
-    });
+    final todayDate = DateFormat("yyy-MM-dd").format(DateTime.now());
+    if (!_selectedDay!.isBefore(DateTime.now())) {
+      try {
+        await db.collection('appointmentDetails').add({
+          "userId": user!.uid,
+          "date": date,
+          "time": dateTimeController.text,
+          "doctor": widget.doctorName
+        }).then((value) =>
+            AlertInfo(message: "Appointment Booked").showInfo(context));
+      } on FirebaseException catch (ex) {
+        log(ex.toString());
+        AlertInfo(message: "Some Error Occured").showInfo(context);
+      } catch (ex) {
+        AlertInfo(message: "Some Error Occured").showInfo(context);
+      }
+    } else {
+      AlertInfo(message: "Date Can't Be In Past").showInfo(context);
+    }
   }
 }
