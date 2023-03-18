@@ -1,12 +1,19 @@
-import 'package:doctor/common/user_info_card.dart';
+import 'dart:developer';
+
+import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 import 'package:table_calendar/table_calendar.dart';
 
+import '../common/user_info_card.dart';
 import '../constant/colors.dart';
 
 class AppointmentPage extends StatefulWidget {
-  const AppointmentPage({super.key});
+  final String? doctorName;
+  final String? specialization;
+  const AppointmentPage({Key? key, this.doctorName, this.specialization})
+      : super(key: key);
 
   @override
   State<AppointmentPage> createState() => _AppointmentPageState();
@@ -35,7 +42,7 @@ class _AppointmentPageState extends State<AppointmentPage> {
       body: SafeArea(
         child: Column(
           children: [
-            UserInfo(name: "Dr. Manohar Ray", profileIcon: false),
+            UserInfoCard(name: widget.doctorName, profileIcon: false),
             const SizedBox(
               height: 40,
               child: Text("Select Your Date"),
@@ -91,7 +98,10 @@ class _AppointmentPageState extends State<AppointmentPage> {
               width: MediaQuery.of(context).size.width * 0.9,
               margin: const EdgeInsets.all(10),
               child: ElevatedButton(
-                  onPressed: () {}, child: const Text("Book Appointment")),
+                  onPressed: () {
+                    saveAppointmentDetails();
+                  },
+                  child: const Text("Book Appointment")),
             )
           ],
         ),
@@ -110,5 +120,17 @@ class _AppointmentPageState extends State<AppointmentPage> {
         dateTimeController.text = newTime.format(context);
       });
     }
+  }
+
+  void saveAppointmentDetails() async {
+    final db = FirebaseFirestore.instance;
+    final user = FirebaseAuth.instance.currentUser;
+    final date = DateFormat("yyyy-MM-dd").format(_selectedDay!);
+    await db.collection('appointmentDetails').add({
+      "userId": user!.uid,
+      "date": date,
+      "time": dateTimeController.text,
+      "doctor": widget.doctorName   
+    });
   }
 }

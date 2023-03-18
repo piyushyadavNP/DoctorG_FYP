@@ -4,11 +4,11 @@ import 'package:flutter/material.dart';
 
 import '../constant/colors.dart';
 
-class UserInfo extends StatelessWidget {
+class UserInfoCard extends StatelessWidget {
   bool? profileIcon;
   String? name;
 
-  UserInfo({
+  UserInfoCard({
     this.name,
     this.profileIcon,
     Key? key,
@@ -41,7 +41,7 @@ class UserInfo extends StatelessWidget {
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               Text(
-                "Hi ${user != null ? user.displayName : ""}",
+                "Hi ${name != null ? name : user!.displayName}",
                 style: const TextStyle(
                     color: Colors.white,
                     fontSize: 20,

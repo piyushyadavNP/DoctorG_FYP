@@ -25,7 +25,7 @@ class LogoName extends StatelessWidget {
         Padding(
           padding: const EdgeInsets.only(left: 8.0),
           child: Text(
-            "headspace",
+            "doctorG",
             softWrap: true,
             style: TextStyle(
                 fontSize: textSize,
@@ -35,7 +35,7 @@ class LogoName extends StatelessWidget {
         ),
         Text(
           "®",
-          style: TextStyle(color: Colors.white, fontSize: 5),
+          style: TextStyle(color: Colors.white, fontSize: 10),
         )
       ],
     );

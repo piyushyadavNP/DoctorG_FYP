@@ -1,3 +1,4 @@
+import 'package:doctor/constant/colors.dart';
 import 'package:doctor/screens/signup_page.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/gestures.dart';
@@ -18,6 +19,7 @@ class LoginPage extends StatefulWidget {
 }
 
 class _LoginPageState extends State<LoginPage> {
+  late String message;
   FirebaseAuth auth = FirebaseAuth.instance;
   final _formKey = GlobalKey<FormState>();
   final TextEditingController _emailController =
@@ -28,7 +30,7 @@ class _LoginPageState extends State<LoginPage> {
   void initState() {
     _emailController.text = "";
     _passwordController.text = "";
-
+    message = "Login";
     super.initState();
   }
 
@@ -36,7 +38,7 @@ class _LoginPageState extends State<LoginPage> {
   Widget build(BuildContext context) {
     return Scaffold(
       resizeToAvoidBottomInset: false,
-      backgroundColor: Color(0xff101340),
+      backgroundColor: primary,
       body: SafeArea(
         child: Column(
           children: [
@@ -60,8 +62,7 @@ class _LoginPageState extends State<LoginPage> {
                 textAlign: TextAlign.center,
                 text: TextSpan(children: [
                   TextSpan(
-                      text: 'New to Headspace? ',
-                      style: AppTextStyle.subtitle2),
+                      text: 'New to doctorG? ', style: AppTextStyle.subtitle2),
                   TextSpan(
                       recognizer: TapGestureRecognizer()
                         ..onTap = () {
@@ -83,13 +84,11 @@ class _LoginPageState extends State<LoginPage> {
               child: Column(
                 children: [
                   CommonTextField(
-                    // validator: validateButton(_firstnameController.text),
                     labelText: "Email Address",
                     controller: _emailController,
                     textInputType: TextInputType.name,
                   ),
                   CommonTextField(
-                    // validator: validateButton(_lastnameController.text),
                     labelText: "Password",
                     controller: _passwordController,
                     textInputType: TextInputType.name,
@@ -117,7 +116,7 @@ class _LoginPageState extends State<LoginPage> {
               onPressed: () => login(),
               size: MediaQuery.of(context).size.width * 0.9,
               color: Color.fromARGB(255, 60, 63, 104),
-              text: "Login",
+              text: message,
             ),
             SizedBox(
               height: 15,
@@ -132,18 +131,34 @@ class _LoginPageState extends State<LoginPage> {
   }
 
   Future<void> login() async {
-    try {
-      UserCredential userCredential = await FirebaseAuth.instance
-          .signInWithEmailAndPassword(
-              email: _emailController.text, password: _passwordController.text);
-      if (userCredential.user == null) {}
-      Navigator.pushNamed(context, '/home');
-    } on FirebaseAuthException catch (ex) {
-      if (ex.code == 'user-not-found') {
-        print('No user found for that email.');
-      } else if (ex.code == 'wrong-password') {
-        print('Wrong password provided for that user.');
+    if (_formKey.currentState!.validate()) {
+      try {
+        UserCredential userCredential = await FirebaseAuth.instance
+            .signInWithEmailAndPassword(
+                email: _emailController.text,
+                password: _passwordController.text);
+        if (userCredential.user == null) {}
+        Navigator.pushNamed(context, '/home');
+      } on FirebaseAuthException catch (ex) {
+        if (ex.code == 'user-not-found' || ex.code == 'wrong-password') {
+          setState(() {
+            message = "Invalid Credentials";
+          });
+          print('No user found for that email.');
+        } else if (ex.code == 'wrong-password') {
+          setState(() {
+            message = "Login Failed";
+          });
+          print('Wrong password provided for that user.');
+        }
       }
     }
+  }
+
+  String? validateButton(String? value) {
+    if (value!.isEmpty) {
+      return 'Please Enter Some Text';
+    } else {}
+    return null;
   }
 }

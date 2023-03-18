@@ -6,6 +6,8 @@ import 'package:doctor/mock/doctorList.dart';
 import 'package:doctor/model/Doctors.dart';
 import 'package:flutter/material.dart';
 
+import '../screens/appointment_page.dart';
+
 class DoctorCard extends StatelessWidget {
   DoctorCard({Key? key}) : super(key: key);
 
@@ -20,14 +22,25 @@ class DoctorCard extends StatelessWidget {
             return ListView(
               children: snapshot.data!.docs.map(
                 (doc) {
-                  return Card(
-                    child: ListTile(
-                      leading: Image.network(
-                        "https://royalphnompenhhospital.com/royalpp/storage/app/uploads/2/2022-06-30/dr_sarisak_01.jpg",
-                        fit: BoxFit.fitHeight,
+                  return InkWell(
+                    onTap: () => Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                        builder: (context) => AppointmentPage(
+                          doctorName: doc['firstName'] + " " + doc['lastName'],
+                          specialization: doc['specialization'],
+                        ),
                       ),
-                      title: Text(doc['firstName'] + " " + doc['lastName']),
-                      subtitle: Text(doc['specialization']),
+                    ),
+                    child: Card(
+                      child: ListTile(
+                        leading: Image.network(
+                          "https://royalphnompenhhospital.com/royalpp/storage/app/uploads/2/2022-06-30/dr_sarisak_01.jpg",
+                          fit: BoxFit.fitHeight,
+                        ),
+                        title: Text(doc['firstName'] + " " + doc['lastName']),
+                        subtitle: Text(doc['specialization']),
+                      ),
                     ),
                   );
                 },

@@ -8,16 +8,18 @@ class CommonTextField extends StatelessWidget {
   TextEditingController? controller;
   Widget? suffix;
   TextInputType? textInputType;
+  String? errorText;
   CommonTextField(
       {Key? key,
       required this.labelText,
       required this.controller,
-       this.textInputType,
+      this.errorText,
+      this.textInputType,
       this.validator,
       this.suffix})
       : super(key: key);
 
-  final String? Function(String?)? validator;
+  String? Function(String?)? validator;
   @override
   Widget build(BuildContext context) {
     return Column(
@@ -38,6 +40,7 @@ class CommonTextField extends StatelessWidget {
               controller: controller,
               style: TextStyle(color: Colors.white),
               decoration: InputDecoration(
+                  errorText: errorText,
                   contentPadding: const EdgeInsets.only(left: 14.0, top: 10.0),
                   border: InputBorder.none,
                   labelText: labelText,

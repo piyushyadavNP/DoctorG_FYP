@@ -21,7 +21,7 @@ class _HomePageState extends State<HomePage> {
       body: SafeArea(
           child: Column(
         children: [
-          UserInfo(
+          UserInfoCard(
             name: "Mamit",
             profileIcon: true,
           ),
@@ -35,20 +35,12 @@ class _HomePageState extends State<HomePage> {
               style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
             ),
           ),
-          Container(height: 150, child:  CategoriesCard()),
+          Container(height: 150, child: CategoriesCard()),
           const Text(
             "Available Doctors",
             style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
           ),
-          Flexible(
-              child: InkWell(
-                  onTap: () => Navigator.pushReplacement(
-                        context,
-                        MaterialPageRoute(
-                          builder: (context) => AppointmentPage(),
-                        ),
-                      ),
-                  child: DoctorCard())),
+          Flexible(child: DoctorCard()),
         ],
       )),
     );

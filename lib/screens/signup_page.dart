@@ -1,6 +1,7 @@
 import 'dart:developer';
 
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:doctor/constant/colors.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
@@ -34,7 +35,7 @@ class _SignupState extends State<Signup> {
   Widget build(BuildContext context) {
     return Scaffold(
       resizeToAvoidBottomInset: false,
-      backgroundColor: Color(0xff101340),
+      backgroundColor: primary,
       body: SafeArea(
         child: Column(
           children: [
@@ -54,7 +55,7 @@ class _SignupState extends State<Signup> {
               padding: const EdgeInsets.all(8.0),
               child: Text(
                 textAlign: TextAlign.center,
-                "Create an account to access meditations, sleep,\n sounds, music to help you focus, and more.",
+                "Create an account to access healthcare, and more.",
                 style: AppTextStyle.subtitle1,
               ),
             ),
@@ -67,7 +68,7 @@ class _SignupState extends State<Signup> {
                     "Already Have an account?",
                     style: TextStyle(
                         color: Colors.white.withOpacity(0.7), fontSize: 15),
-                  ),   
+                  ),
                   Padding(
                     padding: const EdgeInsets.only(left: 2.0),
                     child: GestureDetector(
@@ -91,52 +92,41 @@ class _SignupState extends State<Signup> {
             ),
             Form(
               key: _formKey,
-              onChanged: () => setState(
-                  () => formIsValid = _formKey.currentState!.validate()),
               child: Column(
                 children: [
                   CommonTextField(
-                    validator: validateButton,
+                    validator: (value) {
+                      if (value!.isEmpty || value == null) {
+                        return "First Name Can't Be Empty";
+                      }
+                      return null; 
+                    },
                     labelText: "First Name",
                     controller: _firstnameController,
+                    errorText: validateButton(_firstnameController.text),
                   ),
                   CommonTextField(
-                    validator: validateButton,
                     labelText: "Last Name",
                     controller: _lastnameController,
+                    validator: (value) {
+                      return validateButton(value);
+                    },
                   ),
                   CommonTextField(
-                    validator: validateButton,
                     labelText: "Email Address",
                     controller: _emailController,
+                    validator: (value) {
+                      return validateButton(value);
+                    },
                   ),
                   CommonTextField(
-                    validator: validateButton,
                     labelText: "Password",
                     controller: _paswordController,
+                    validator: (value) {
+                      return validateButton(value);
+                    },
                   ),
                 ],
-              ),
-            ),
-            Padding(
-              padding: const EdgeInsets.all(9.5),
-              child: GestureDetector(
-                onTap: () {},
-                child: RichText(
-                  textAlign: TextAlign.center,
-                  text: TextSpan(children: [
-                    TextSpan(
-                        text: 'By continuing, you agree to Headspace\'s\ ',
-                        style: AppTextStyle.subtitle2),
-                    TextSpan(
-                        text: 'Terms And Conditions ',
-                        style: AppTextStyle.inkWellLink),
-                    TextSpan(text: 'and ', style: AppTextStyle.subtitle2),
-                    TextSpan(
-                        text: 'Privacy Policy.',
-                        style: AppTextStyle.inkWellLink)
-                  ]),
-                ),
               ),
             ),
             SizedBox(
@@ -153,69 +143,8 @@ class _SignupState extends State<Signup> {
             SizedBox(
               height: 15,
             ),
-            MaterialCommonButton(
-                isImage: false,
-                color: Color.fromARGB(255, 60, 63, 104),
-                text: "Create with SSO",
-                onPressed: () {
-                  Navigator.pushReplacement(
-                      context,
-                      MaterialPageRoute(
-                          builder: (context) => const MainPage()));
-                },
-                size: MediaQuery.of(context).size.width * 0.9),
-            Padding(
-              padding: const EdgeInsets.only(top: 30.0),
-              child: Text(
-                textAlign: TextAlign.center,
-                "Link an account to log in faster in the future",
-                style: AppTextStyle.subtitle2,
-              ),
-            ),
             SizedBox(
               height: 10,
-            ),
-            Row(
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: [
-                Padding(
-                  padding: const EdgeInsets.all(8.0),
-                  child: MaterialCommonButton(
-                      isImage: true,
-                      image: Image.asset(
-                        "assets/man.png",
-                        height: 30,
-                      ),
-                      color: Colors.white,
-                      onPressed: () {},
-                      size: MediaQuery.of(context).size.width * 0.25),
-                ),
-                Padding(
-                  padding: const EdgeInsets.all(8.0),
-                  child: MaterialCommonButton(
-                      isImage: true,
-                      image: Image.asset(
-                        "assets/man.png",
-                        height: 30,
-                      ),
-                      color: Color(0xff1877F2),
-                      onPressed: () {},
-                      size: MediaQuery.of(context).size.width * 0.25),
-                ),
-                Padding(
-                  padding: const EdgeInsets.all(8.0),
-                  child: MaterialCommonButton(
-                      isImage: true,
-                      image: Image.asset(
-                        "assets/man.png",
-                        height: 30,
-                        color: Colors.white,
-                      ),
-                      color: Color.fromARGB(255, 15, 15, 15),
-                      onPressed: () {},
-                      size: MediaQuery.of(context).size.width * 0.25),
-                ),
-              ],
             ),
           ],
         ),
@@ -245,11 +174,20 @@ class _SignupState extends State<Signup> {
   }
 
   String? validateButton(String? value) {
-    if (value!.isNotEmpty) {
-      _isValidate;
-    } else {
+    log(value.toString());
+    if (value!.isEmpty || value == null) {
       return 'Please Enter Some Text';
     }
     return null;
+  }
+
+  @override
+  void dispose() {
+    _firstnameController.dispose();
+    _lastnameController.dispose();
+    _emailController.dispose();
+    _paswordController.dispose();
+    // TODO: implement dispose
+    super.dispose();
   }
 }

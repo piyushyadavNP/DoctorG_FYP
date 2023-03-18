@@ -17,7 +17,7 @@ class _MainPageState extends State<MainPage> with TickerProviderStateMixin {
   TabController? tabController;
   List<Widget> pages = [
     const HomePage(),
-    const AppointmentPage(),
+     AppointmentPage(),
     const CounterPage(),
   ];
   int currentIndex = 0;
