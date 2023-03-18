@@ -27,7 +27,7 @@ class DoctorCard extends StatelessWidget {
                       context,
                       MaterialPageRoute(
                         builder: (context) => AppointmentPage(
-                          doctorName: doc['firstName'] + " " + doc['lastName'],
+                          doctorName: doc['name'],
                           specialization: doc['specialization'],
                         ),
                       ),
@@ -38,7 +38,7 @@ class DoctorCard extends StatelessWidget {
                           "https://royalphnompenhhospital.com/royalpp/storage/app/uploads/2/2022-06-30/dr_sarisak_01.jpg",
                           fit: BoxFit.fitHeight,
                         ),
-                        title: Text(doc['firstName'] + " " + doc['lastName']),
+                        title: Text(doc['name']),
                         subtitle: Text(doc['specialization']),
                       ),
                     ),

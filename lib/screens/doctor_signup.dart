@@ -1,8 +1,8 @@
 import 'dart:developer';
 
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:doctor/common/alert_info.dart';
 import 'package:doctor/constant/colors.dart';
-import 'package:doctor/screens/doctor_signup.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
@@ -16,18 +16,23 @@ import '../widget/textField.dart';
 import 'login_page.dart';
 import 'navbar.dart';
 
-class Signup extends StatefulWidget {
-  const Signup({Key? key}) : super(key: key);
+class DoctorSignup extends StatefulWidget {
+  const DoctorSignup({Key? key}) : super(key: key);
 
   @override
-  State<Signup> createState() => _SignupState();
+  State<DoctorSignup> createState() => _DoctorSignupState();
 }
 
-class _SignupState extends State<Signup> {
+class _DoctorSignupState extends State<DoctorSignup> {
   final TextEditingController _firstnameController = TextEditingController();
   final TextEditingController _lastnameController = TextEditingController();
   final TextEditingController _emailController = TextEditingController();
   final TextEditingController _paswordController = TextEditingController();
+  final TextEditingController _nmcNo = TextEditingController();
+  final TextEditingController _mobile = TextEditingController();
+  final TextEditingController _specialization = TextEditingController();
+  final TextEditingController _vistingDays = TextEditingController();
+
   final _formKey = GlobalKey<FormState>();
   bool _isValidate = false;
   bool formIsValid = false;
@@ -127,6 +132,34 @@ class _SignupState extends State<Signup> {
                       return validateButton(value);
                     },
                   ),
+                  CommonTextField(
+                    labelText: "NMC No",
+                    controller: _nmcNo,
+                    validator: (value) {
+                      return validateButton(value);
+                    },
+                  ),
+                  CommonTextField(
+                    labelText: "Mobile Number",
+                    controller: _mobile,
+                    validator: (value) {
+                      return validateButton(value);
+                    },
+                  ),
+                  CommonTextField(
+                    labelText: "Specilization",
+                    controller: _specialization,
+                    validator: (value) {
+                      return validateButton(value);
+                    },
+                  ),
+                  CommonTextField(
+                    labelText: "Visting Hospital/Clinic",
+                    controller: _vistingDays,
+                    validator: (value) {
+                      return validateButton(value);
+                    },
+                  ),
                 ],
               ),
             ),
@@ -138,7 +171,7 @@ class _SignupState extends State<Signup> {
                 color: Colors.blue,
                 text: "Create an account",
                 onPressed: () {
-                  signUp();
+                  DoctorSignup();
                 },
                 size: MediaQuery.of(context).size.width * 0.9),
             SizedBox(
@@ -148,36 +181,8 @@ class _SignupState extends State<Signup> {
               padding: const EdgeInsets.all(8.0),
               child: Text(
                 textAlign: TextAlign.center,
-                "For Health Professional",
-                style: AppTextStyle.subtitle1,
-              ),
-            ),
-            Padding(
-              padding: const EdgeInsets.all(8.0),
-              child: Row(
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: [
-                  Text(
-                    "SignUp Here ! ",
-                    style: TextStyle(
-                        color: Colors.white.withOpacity(0.7), fontSize: 15),
-                  ),
-                  Padding(
-                    padding: const EdgeInsets.only(left: 2.0),
-                    child: GestureDetector(
-                      child: Text(
-                        "SignUp",
-                        style: AppTextStyle.inkWellLink,
-                      ),
-                      onTap: () {
-                        Navigator.pushReplacement(
-                            context,
-                            MaterialPageRoute(
-                                builder: (context) => const DoctorSignup()));
-                      },
-                    ),
-                  ),
-                ],
+                "Customize your visting date and time after signup.",
+                style: AppTextStyle.subtitle2,
               ),
             ),
             SizedBox(
@@ -189,23 +194,29 @@ class _SignupState extends State<Signup> {
     );
   }
 
-  Future<void> signUp() async {
+  Future<void> DoctorSignup() async {
     try {
       final UserCredential userCredential;
-      final db = FirebaseFirestore.instance.collection("users");
+      final db = FirebaseFirestore.instance;
       userCredential = await FirebaseAuth.instance
           .createUserWithEmailAndPassword(
               email: _emailController.text, password: _paswordController.text);
       userCredential.user!.updateDisplayName(
           _firstnameController.text.trim() + _lastnameController.text.trim());
-      db.doc(userCredential.user!.uid).set({
+      db.collection('doctor').doc(userCredential.user!.uid).set({
         "name":
-            _firstnameController.text.trim() + _lastnameController.text.trim(),
+            "${_firstnameController.text.trim()} ${_lastnameController.text.trim()}",
         "email": _emailController.text.trim(),
-        "isAdmin": false,
-      });
+        "nmcNo": _nmcNo.text.trim(),
+        "mobile": _mobile.text.trim(),
+        "specialization": _specialization.text.trim(),
+        "visitingDays": _vistingDays.text.trim(),
+        "isAdmin": true,
+      }).then((value) =>
+          AlertInfo(message: "Registration Success.").showInfo(context));
     } catch (ex) {
       log(ex.toString());
+      AlertInfo(message: "Registration Failed.").showInfo(context);
     }
   }
 

@@ -1,3 +1,6 @@
+import 'dart:developer';
+
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:doctor/constant/colors.dart';
 import 'package:doctor/screens/signup_page.dart';
 import 'package:firebase_auth/firebase_auth.dart';
@@ -137,7 +140,14 @@ class _LoginPageState extends State<LoginPage> {
             .signInWithEmailAndPassword(
                 email: _emailController.text,
                 password: _passwordController.text);
+        bool? isDoctor = await checkUserType(userCredential);
+
         if (userCredential.user == null) {}
+        if (isDoctor!) {
+          Navigator.pushNamed(context, '/doctorPage',
+              arguments: {"isDoctor": isDoctor});
+          return;
+        }
         Navigator.pushNamed(context, '/home');
       } on FirebaseAuthException catch (ex) {
         if (ex.code == 'user-not-found' || ex.code == 'wrong-password') {
@@ -160,5 +170,24 @@ class _LoginPageState extends State<LoginPage> {
       return 'Please Enter Some Text';
     } else {}
     return null;
+  }
+
+  Future<bool?> checkUserType(UserCredential userCredential) async {
+    bool? result;
+    log("user ${userCredential.user!.uid}");
+    try {
+      await FirebaseFirestore.instance
+          .collection("doctor")
+          .doc(userCredential.user!.uid.toString())
+          .get()
+          .then((value) {
+        log("Value ${value.data()!['isDoctor']}");
+        result = value.data()!['isDoctor'];
+      });
+      return result;
+    } catch (ex) {
+      log(ex.toString());
+    }
+    return false;
   }
 }

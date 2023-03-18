@@ -4,6 +4,7 @@ import 'package:doctor/common/time_picker.dart';
 import 'package:doctor/provider/counter.dart';
 import 'package:doctor/screens/appointment_page.dart';
 import 'package:doctor/screens/counter_page.dart';
+import 'package:doctor/screens/doctor_page.dart';
 import 'package:doctor/screens/homePage.dart';
 import 'package:doctor/screens/login_page.dart';
 import 'package:doctor/screens/signup_page.dart';
@@ -49,7 +50,8 @@ class MyApp extends StatelessWidget {
           '/signup': (context) => const Signup(),
           '/home': (context) => const MainPage(),
           '/count': (context) => const CounterPage(),
-          '/book': (context) => AppointmentPage()
+          '/book': (context) => const AppointmentPage(),
+          '/doctorPage': (context) => DoctorPage(),
         },
       ),
     );

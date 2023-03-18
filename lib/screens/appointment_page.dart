@@ -1,7 +1,7 @@
 import 'dart:developer';
 
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:doctor/common/succes_info.dart';
+import 'package:doctor/common/alert_info.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
@@ -128,6 +128,10 @@ class _AppointmentPageState extends State<AppointmentPage> {
     final user = FirebaseAuth.instance.currentUser;
     final date = DateFormat("yyyy-MM-dd").format(_selectedDay!);
     final todayDate = DateFormat("yyy-MM-dd").format(DateTime.now());
+    if (dateTimeController.text.isEmpty) {
+      AlertInfo(message: "Missed To Select Time.").showInfo(context);
+      return;
+    }
     if (!_selectedDay!.isBefore(DateTime.now())) {
       try {
         await db.collection('appointmentDetails').add({
