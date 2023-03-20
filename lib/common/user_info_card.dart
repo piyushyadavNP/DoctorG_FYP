@@ -25,11 +25,7 @@ class UserInfoCard extends StatelessWidget {
           width: MediaQuery.of(context).size.width,
           height: MediaQuery.of(context).size.height / 4,
           decoration: BoxDecoration(
-              borderRadius: BorderRadius.circular(5.0),
-              gradient: const LinearGradient(
-                  begin: Alignment.topLeft,
-                  end: Alignment.bottomRight,
-                  colors: gradientCardColor)),
+              borderRadius: BorderRadius.circular(5.0), color: primary),
         ),
       ),
       Positioned(
@@ -88,16 +84,12 @@ class UserInfoCard extends StatelessWidget {
                   height: 40,
                   width: 40,
                   child: IconButton(
-                    icon: Image.asset(
-                      "assets/man.png",
-                    ),
-                    onPressed: () {
-                      FirebaseAuth.instance.signOut();
-                      if (FirebaseAuth.instance.currentUser == null) {
-                        Navigator.pushNamed(context, '/');
-                      }
-                    },
-                  ),
+                      icon: Image.asset(
+                        "assets/man.png",
+                      ),
+                      onPressed: () {
+                        Navigator.pushNamed(context, '/profile');
+                      }),
                 ),
               ),
             )

@@ -9,10 +9,11 @@ import 'package:flutter/material.dart';
 import 'package:flutter/src/foundation/key.dart';
 import 'package:flutter/src/widgets/framework.dart';
 
-import '../common/text_style.dart';
+
 import '../widget/button.dart';
 import '../widget/logo_container.dart';
 import '../widget/textField.dart';
+import '../common/text_style.dart';
 
 class LoginPage extends StatefulWidget {
   const LoginPage({Key? key}) : super(key: key);

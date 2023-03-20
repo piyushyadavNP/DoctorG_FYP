@@ -27,6 +27,7 @@ class DoctorCard extends StatelessWidget {
                       context,
                       MaterialPageRoute(
                         builder: (context) => AppointmentPage(
+                          doctorId: doc.id,
                           doctorName: doc['name'],
                           specialization: doc['specialization'],
                         ),

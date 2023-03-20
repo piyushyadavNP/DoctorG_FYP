@@ -17,7 +17,7 @@ class _MainPageState extends State<MainPage> with TickerProviderStateMixin {
   TabController? tabController;
   List<Widget> pages = [
     const HomePage(),
-     AppointmentPage(),
+    AppointmentPage(),
     const CounterPage(),
   ];
   int currentIndex = 0;
@@ -38,16 +38,15 @@ class _MainPageState extends State<MainPage> with TickerProviderStateMixin {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-        backgroundColor: Color.fromRGBO(255, 255, 255, 1),
         body: pages[currentIndex],
         bottomNavigationBar: SafeArea(
           child: BottomNavigationBar(
             onTap: onTap,
             type: BottomNavigationBarType.fixed,
-            backgroundColor: home,
+            backgroundColor: primary,
             currentIndex: currentIndex,
-            selectedItemColor: secondary,
-            unselectedItemColor: white.withOpacity(0.4),
+            selectedItemColor: white,
+            unselectedItemColor: secondary,
             selectedFontSize: 12,
             unselectedFontSize: 12,
             items: [

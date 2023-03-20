@@ -3,13 +3,12 @@ import 'dart:developer';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:doctor/common/alert_info.dart';
 import 'package:doctor/constant/colors.dart';
+import 'package:doctor/common/text_style.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/src/foundation/key.dart';
 import 'package:flutter/src/widgets/framework.dart';
-
-import '../common/text_style.dart';
 import '../widget/button.dart';
 import '../widget/logo_container.dart';
 import '../widget/textField.dart';
@@ -198,11 +197,16 @@ class _DoctorSignupState extends State<DoctorSignup> {
     try {
       final UserCredential userCredential;
       final db = FirebaseFirestore.instance;
+      // Doctor Registration
       userCredential = await FirebaseAuth.instance
           .createUserWithEmailAndPassword(
               email: _emailController.text, password: _paswordController.text);
+
+      // Set Doctor Display Name
       userCredential.user!.updateDisplayName(
-          _firstnameController.text.trim() + _lastnameController.text.trim());
+          "${_firstnameController.text.trim()} ${_lastnameController.text.trim()}");
+
+      // Store Doctor Additional Info to doctor
       db.collection('doctor').doc(userCredential.user!.uid).set({
         "name":
             "${_firstnameController.text.trim()} ${_lastnameController.text.trim()}",

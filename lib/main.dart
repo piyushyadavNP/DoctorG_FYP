@@ -7,6 +7,7 @@ import 'package:doctor/screens/counter_page.dart';
 import 'package:doctor/screens/doctor_page.dart';
 import 'package:doctor/screens/homePage.dart';
 import 'package:doctor/screens/login_page.dart';
+import 'package:doctor/screens/profile_screen.dart';
 import 'package:doctor/screens/signup_page.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
@@ -51,7 +52,8 @@ class MyApp extends StatelessWidget {
           '/home': (context) => const MainPage(),
           '/count': (context) => const CounterPage(),
           '/book': (context) => const AppointmentPage(),
-          '/doctorPage': (context) => DoctorPage(),
+          '/doctorPage': (context) => const DoctorPage(),
+          '/profile': (context) => const ProfileScreen(),
         },
       ),
     );

@@ -1,9 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 
-import '../constant/colors.dart';
-
-
 class AppTextStyle {
   const AppTextStyle._();
 
@@ -26,24 +23,6 @@ class AppTextStyle {
     fontWeight: FontWeight.bold,
     color: Colors.white,
   );
-
-  // static TextStyle headline4 = GoogleFonts.barlowSemiCondensed(
-  //     fontSize: 24,
-  //     height: 1.35,
-  //     fontWeight: FontWeight.w600,
-  //     letterSpacing: 0.15);
-
-  // static TextStyle headline5 = GoogleFonts.roboto(
-  //     fontSize: 24,
-  //     height: 1.334,
-  //     fontWeight: FontWeight.w400,
-  //     letterSpacing: 0);
-
-  // static TextStyle headline6 = GoogleFonts.barlowSemiCondensed(
-  //     fontSize: 20,
-  //     height: 1,
-  //     fontWeight: FontWeight.w600,
-  //     letterSpacing: 0.15);
 
   static TextStyle inkWellLink = GoogleFonts.roboto(
     fontSize: 14,
@@ -91,4 +70,6 @@ class AppTextStyle {
       height: 1.5,
       fontWeight: FontWeight.w400,
       letterSpacing: 0.1);
+
+  static get white => null;
 }
