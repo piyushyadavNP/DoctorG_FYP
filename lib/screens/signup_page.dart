@@ -4,6 +4,7 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:doctor/constant/colors.dart';
 import 'package:doctor/screens/doctor_signup.dart';
 import 'package:doctor/common/text_style.dart';
+import 'package:doctor/widget/drop_down.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
@@ -28,9 +29,14 @@ class _SignupState extends State<Signup> {
   final TextEditingController _lastnameController = TextEditingController();
   final TextEditingController _emailController = TextEditingController();
   final TextEditingController _paswordController = TextEditingController();
+  final TextEditingController _confirmPaswordController =
+      TextEditingController();
+
   final _formKey = GlobalKey<FormState>();
   bool _isValidate = false;
   bool formIsValid = false;
+
+  String? _chosenValue;
 
   @override
   Widget build(BuildContext context) {
@@ -97,34 +103,66 @@ class _SignupState extends State<Signup> {
                 children: [
                   CommonTextField(
                     validator: (value) {
-                      if (value!.isEmpty || value == null) {
+                      if (value!.isEmpty) {
                         return "First Name Can't Be Empty";
                       }
                       return null;
                     },
                     labelText: "First Name",
                     controller: _firstnameController,
-                    errorText: validateButton(_firstnameController.text),
                   ),
                   CommonTextField(
                     labelText: "Last Name",
                     controller: _lastnameController,
                     validator: (value) {
-                      return validateButton(value);
+                      if (value!.isEmpty) {
+                        return "Last Name Can't Be Empty";
+                      }
+                      return null;
                     },
                   ),
                   CommonTextField(
                     labelText: "Email Address",
                     controller: _emailController,
                     validator: (value) {
-                      return validateButton(value);
+                      if (value!.isEmpty) {
+                        return "Email Address Can't Be Empty";
+                      }
+                      return null;
                     },
                   ),
+                  CommonTextField(
+                    labelText: "Age",
+                    controller: _emailController,
+                    validator: (value) {
+                      if (value!.isEmpty) {
+                        return "Age Can't Be Empty";
+                      }
+                      return null;
+                    },
+                  ),
+                  const DropDownField(),
                   CommonTextField(
                     labelText: "Password",
                     controller: _paswordController,
                     validator: (value) {
-                      return validateButton(value);
+                      if (value!.isEmpty) {
+                        return "Password Can't Be Empty";
+                      }
+                      return null;
+                    },
+                  ),
+                  CommonTextField(
+                    labelText: "Confirm Password",
+                    controller: _confirmPaswordController,
+                    validator: (value) {
+                      if (value!.isEmpty) {
+                        return "PLease Confirm Your Password";
+                      } else if (_paswordController.text !=
+                          _confirmPaswordController.text) {
+                        return "Password Missmatch";
+                      }
+                      return null;
                     },
                   ),
                 ],
@@ -190,6 +228,10 @@ class _SignupState extends State<Signup> {
   }
 
   Future<void> signUp() async {
+    if (!_formKey.currentState!.validate()) {
+      log("Form Validation Error");
+      return;
+    }
     try {
       final UserCredential userCredential;
       final db = FirebaseFirestore.instance.collection("users");
@@ -213,14 +255,6 @@ class _SignupState extends State<Signup> {
     } catch (ex) {
       log(ex.toString());
     }
-  }
-
-  String? validateButton(String? value) {
-    log(value.toString());
-    if (value!.isEmpty || value == null) {
-      return 'Please Enter Some Text';
-    }
-    return null;
   }
 
   @override

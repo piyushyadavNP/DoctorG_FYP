@@ -9,7 +9,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter/src/foundation/key.dart';
 import 'package:flutter/src/widgets/framework.dart';
 
-
 import '../widget/button.dart';
 import '../widget/logo_container.dart';
 import '../widget/textField.dart';
@@ -91,11 +90,23 @@ class _LoginPageState extends State<LoginPage> {
                     labelText: "Email Address",
                     controller: _emailController,
                     textInputType: TextInputType.name,
+                    validator: (value) {
+                      if (value!.isEmpty) {
+                        return "Please Enter Email Address";
+                      }
+                      return null;
+                    },
                   ),
                   CommonTextField(
                     labelText: "Password",
                     controller: _passwordController,
                     textInputType: TextInputType.name,
+                    validator: (value) {
+                      if (value!.isEmpty) {
+                        return "Please Enter Password";
+                      }
+                      return null;
+                    },
                   ),
                 ],
               ),
@@ -112,7 +123,7 @@ class _LoginPageState extends State<LoginPage> {
                 ),
               ],
             ),
-            SizedBox(
+            const SizedBox(
               height: 30,
             ),
             MaterialCommonButton(
@@ -122,10 +133,10 @@ class _LoginPageState extends State<LoginPage> {
               color: Color.fromARGB(255, 60, 63, 104),
               text: message,
             ),
-            SizedBox(
+            const SizedBox(
               height: 15,
             ),
-            SizedBox(
+            const SizedBox(
               height: 15,
             ),
           ],
@@ -155,12 +166,12 @@ class _LoginPageState extends State<LoginPage> {
           setState(() {
             message = "Invalid Credentials";
           });
-          print('No user found for that email.');
+          log('No user found for that email.');
         } else if (ex.code == 'wrong-password') {
           setState(() {
             message = "Login Failed";
           });
-          print('Wrong password provided for that user.');
+          log('Wrong password provided for that user.');
         }
       }
     }

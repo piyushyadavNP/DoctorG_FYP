@@ -18,7 +18,7 @@ const Color shrineBrown600 = Color(0xFF7D4F52);
 
 const Color shrineErrorRed = Color(0xFFC5032B);
 
-const Color shrineSurfaceWhite = Color(0xFFFFFBFA);
+const Color shrineSurfaceWhite = Color.fromARGB(255, 252, 248, 246);
 const Color shrineBackgroundWhite = Colors.white;
 
 const defaultLetterSpacing = 0.03;

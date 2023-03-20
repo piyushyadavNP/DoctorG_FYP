@@ -108,55 +108,75 @@ class _DoctorSignupState extends State<DoctorSignup> {
                     },
                     labelText: "First Name",
                     controller: _firstnameController,
-                    errorText: validateButton(_firstnameController.text),
                   ),
                   CommonTextField(
                     labelText: "Last Name",
                     controller: _lastnameController,
                     validator: (value) {
-                      return validateButton(value);
+                      if (value!.isEmpty) {
+                        return "Last Name Can't Be Empty";
+                      }
+                      return null;
                     },
                   ),
                   CommonTextField(
                     labelText: "Email Address",
                     controller: _emailController,
                     validator: (value) {
-                      return validateButton(value);
+                      if (value!.isEmpty) {
+                        return "Email Address Can't Be Empty";
+                      }
+                      return null;
                     },
                   ),
                   CommonTextField(
                     labelText: "Password",
                     controller: _paswordController,
                     validator: (value) {
-                      return validateButton(value);
+                      if (value!.isEmpty) {
+                        return "Password Can't Be Empty";
+                      }
+                      return null;
                     },
                   ),
                   CommonTextField(
                     labelText: "NMC No",
                     controller: _nmcNo,
                     validator: (value) {
-                      return validateButton(value);
+                      if (value!.isEmpty) {
+                        return "MNC No Can't Be Empty";
+                      }
+                      return null;
                     },
                   ),
                   CommonTextField(
                     labelText: "Mobile Number",
                     controller: _mobile,
                     validator: (value) {
-                      return validateButton(value);
+                      if (value!.isEmpty) {
+                        return "Mobile Number Can't Be Empty";
+                      }
+                      return null;
                     },
                   ),
                   CommonTextField(
                     labelText: "Specilization",
                     controller: _specialization,
                     validator: (value) {
-                      return validateButton(value);
+                      if (value!.isEmpty) {
+                        return "Specialization Can't Be Empty";
+                      }
+                      return null;
                     },
                   ),
                   CommonTextField(
                     labelText: "Visting Hospital/Clinic",
                     controller: _vistingDays,
                     validator: (value) {
-                      return validateButton(value);
+                      if (value!.isEmpty) {
+                        return "Field Can't Be Empty";
+                      }
+                      return null;
                     },
                   ),
                 ],
@@ -194,6 +214,10 @@ class _DoctorSignupState extends State<DoctorSignup> {
   }
 
   Future<void> DoctorSignup() async {
+    if (!_formKey.currentState!.validate()) {
+      log("Form Validation Error");
+      return;
+    }
     try {
       final UserCredential userCredential;
       final db = FirebaseFirestore.instance;
