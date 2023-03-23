@@ -23,21 +23,22 @@ class MaterialCommonButton extends StatelessWidget {
         height: 40,
         width: size,
         child: ElevatedButton(
-          child: isImage == false
-              ? Text(
-                  text!,
-                  style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
-                )
-              : image,
           onPressed: onPressed,
           style: ElevatedButton.styleFrom(
             elevation: 10,
-            primary: color,
-            onPrimary: Colors.white,
+            backgroundColor: color,
+            foregroundColor: Colors.white,
             shape: RoundedRectangleBorder(
               borderRadius: BorderRadius.circular(25.0),
             ),
           ),
+          child: isImage == false
+              ? Text(
+                  text!,
+                  style: const TextStyle(
+                      fontSize: 18, fontWeight: FontWeight.bold),
+                )
+              : image,
         ));
   }
 }

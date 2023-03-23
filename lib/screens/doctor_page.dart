@@ -32,7 +32,7 @@ class _DoctorPageState extends State<DoctorPage> {
           child: Column(
             children: [
               UserInfoCard(
-                profileIcon: true,
+                profileIcon: false,
               ),
               Container(
                 margin: const EdgeInsets.all(10),

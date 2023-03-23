@@ -130,7 +130,7 @@ class _LoginPageState extends State<LoginPage> {
               isImage: false,
               onPressed: () => login(),
               size: MediaQuery.of(context).size.width * 0.9,
-              color: Color.fromARGB(255, 60, 63, 104),
+              color: Colors.blue,
               text: message,
             ),
             const SizedBox(

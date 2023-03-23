@@ -1,3 +1,4 @@
+import 'package:doctor/constant/colors.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/src/widgets/container.dart';
 import 'package:flutter/src/widgets/framework.dart';
@@ -22,27 +23,30 @@ class _DropDownFieldState extends State<DropDownField> {
             width: MediaQuery.of(context).size.width * 0.9,
             decoration: BoxDecoration(
                 border: Border.all(
-                  color: Color(0xFFFFFFFF).withOpacity(0.3),
+                  color: const Color(0xFFFFFFFF).withOpacity(0.3),
                 ),
                 borderRadius: BorderRadius.circular(10)),
             child: DropdownButton<String>(
               value: _chosenValue,
-              //elevation: 5,
-              style: TextStyle(color: Colors.black),
-
+              dropdownColor: Colors.blue,
+              isExpanded: true,
+              iconEnabledColor: white,
+              style: const TextStyle(fontSize: 12, color: Colors.white),
               items: <String>['Male', 'Female', 'Other']
                   .map<DropdownMenuItem<String>>((String value) {
                 return DropdownMenuItem<String>(
                   value: value,
-                  child: Text(value),
+                  child: Padding(
+                    padding: const EdgeInsets.all(8.0),
+                    child: Text(
+                      value,
+                    ),
+                  ),
                 );
               }).toList(),
               hint: const Text(
-                "Please choose a langauage",
-                style: TextStyle(
-                    color: Colors.black,
-                    fontSize: 16,
-                    fontWeight: FontWeight.w600),
+                "Gender",
+                style: TextStyle(color: white, fontSize: 12),
               ),
               onChanged: (String? value) {
                 setState(() {
