@@ -11,6 +11,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/src/foundation/key.dart';
 import 'package:flutter/src/widgets/framework.dart';
 
+import '../common/alert_info.dart';
 import '../widget/button.dart';
 import '../widget/logo_container.dart';
 import '../widget/textField.dart';
@@ -29,14 +30,15 @@ class _SignupState extends State<Signup> {
   final TextEditingController _lastnameController = TextEditingController();
   final TextEditingController _emailController = TextEditingController();
   final TextEditingController _paswordController = TextEditingController();
+  final TextEditingController _ageController = TextEditingController();
+  String? Function(String?)? onChanged;
+  String? gender;
   final TextEditingController _confirmPaswordController =
       TextEditingController();
 
   final _formKey = GlobalKey<FormState>();
   bool _isValidate = false;
   bool formIsValid = false;
-
-  String? _chosenValue;
 
   @override
   Widget build(BuildContext context) {
@@ -133,7 +135,7 @@ class _SignupState extends State<Signup> {
                   ),
                   CommonTextField(
                     labelText: "Age",
-                    controller: _emailController,
+                    controller: _ageController,
                     validator: (value) {
                       if (value!.isEmpty) {
                         return "Age Can't Be Empty";
@@ -141,7 +143,15 @@ class _SignupState extends State<Signup> {
                       return null;
                     },
                   ),
-                  const DropDownField(),
+                  DropDownField(
+                    chosenValue: gender,
+                    onChanged: (String? value) {
+                      setState(() {
+                        gender = value;
+                      });
+                      return gender;
+                    },
+                  ),
                   CommonTextField(
                     labelText: "Password",
                     controller: _paswordController,
@@ -168,7 +178,7 @@ class _SignupState extends State<Signup> {
                 ],
               ),
             ),
-            SizedBox(
+            const SizedBox(
               height: 10,
             ),
             MaterialCommonButton(
@@ -179,7 +189,7 @@ class _SignupState extends State<Signup> {
                   signUp();
                 },
                 size: MediaQuery.of(context).size.width * 0.9),
-            SizedBox(
+            const SizedBox(
               height: 15,
             ),
             Padding(
@@ -228,6 +238,7 @@ class _SignupState extends State<Signup> {
   }
 
   Future<void> signUp() async {
+    log("The gender is $gender");
     if (!_formKey.currentState!.validate()) {
       log("Form Validation Error");
       return;
@@ -250,10 +261,15 @@ class _SignupState extends State<Signup> {
         "name":
             "${_firstnameController.text.trim()} ${_lastnameController.text.trim()}",
         "email": _emailController.text.trim(),
+        "age": _ageController.text.trim(),
+        "gender": gender!.trim(),
         "isAdmin": false,
-      });
+        "createdAt": DateTime.parse(Timestamp.now().toDate().toString()),
+      }).then((value) =>
+          AlertInfo(message: "Registration Success.").showInfo(context));
     } catch (ex) {
       log(ex.toString());
+      AlertInfo(message: "Registration Failed.").showInfo(context);
     }
   }
 

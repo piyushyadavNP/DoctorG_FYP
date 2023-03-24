@@ -1,17 +1,18 @@
+import 'dart:developer';
+
 import 'package:doctor/constant/colors.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/src/widgets/container.dart';
-import 'package:flutter/src/widgets/framework.dart';
 
 class DropDownField extends StatefulWidget {
-  const DropDownField({super.key});
+  String? chosenValue;
+  String? Function(String?)? onChanged;
+  DropDownField({Key? key, this.chosenValue, this.onChanged}) : super(key: key);
 
   @override
   State<DropDownField> createState() => _DropDownFieldState();
 }
 
 class _DropDownFieldState extends State<DropDownField> {
-  String? _chosenValue;
   @override
   Widget build(BuildContext context) {
     return Column(
@@ -27,33 +28,28 @@ class _DropDownFieldState extends State<DropDownField> {
                 ),
                 borderRadius: BorderRadius.circular(10)),
             child: DropdownButton<String>(
-              value: _chosenValue,
-              dropdownColor: Colors.blue,
-              isExpanded: true,
-              iconEnabledColor: white,
-              style: const TextStyle(fontSize: 12, color: Colors.white),
-              items: <String>['Male', 'Female', 'Other']
-                  .map<DropdownMenuItem<String>>((String value) {
-                return DropdownMenuItem<String>(
-                  value: value,
-                  child: Padding(
-                    padding: const EdgeInsets.all(8.0),
-                    child: Text(
-                      value,
+                value: widget.chosenValue,
+                dropdownColor: Colors.blue,
+                isExpanded: true,
+                iconEnabledColor: white,
+                style: const TextStyle(fontSize: 12, color: Colors.white),
+                items: <String>['Male', 'Female', 'Other']
+                    .map<DropdownMenuItem<String>>((String value) {
+                  return DropdownMenuItem<String>(
+                    value: value,
+                    child: Padding(
+                      padding: const EdgeInsets.all(8.0),
+                      child: Text(
+                        value,
+                      ),
                     ),
-                  ),
-                );
-              }).toList(),
-              hint: const Text(
-                "Gender",
-                style: TextStyle(color: white, fontSize: 12),
-              ),
-              onChanged: (String? value) {
-                setState(() {
-                  _chosenValue = value;
-                });
-              },
-            ),
+                  );
+                }).toList(),
+                hint: const Text(
+                  "Gender",
+                  style: TextStyle(color: white, fontSize: 12),
+                ),
+                onChanged: widget.onChanged),
           ),
         ),
         const SizedBox(

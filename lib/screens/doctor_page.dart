@@ -1,9 +1,6 @@
 import 'package:doctor/common/appointment_list.dart';
 import 'package:doctor/common/user_info_card.dart';
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/src/widgets/container.dart';
-import 'package:flutter/src/widgets/framework.dart';
 
 class DoctorPage extends StatefulWidget {
   const DoctorPage({Key? key}) : super(key: key);

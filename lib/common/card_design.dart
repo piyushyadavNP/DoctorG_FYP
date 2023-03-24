@@ -32,14 +32,14 @@ class CommonSingleCard extends StatelessWidget {
                       "Courses and singless",
                       style: AppTextStyle.headline3,
                     ),
-                    SizedBox(
+                    const SizedBox(
                       height: 10,
                     ),
                     Text(
                       "Guided meditation for any moment",
                       style: AppTextStyle.subtitle2,
                     ),
-                    SizedBox(
+                    const SizedBox(
                       height: 10,
                     )
                   ],
@@ -47,7 +47,7 @@ class CommonSingleCard extends StatelessWidget {
               ),
               Expanded(
                 child: Image.asset(
-                  "assets/man.png",
+                  "assets/profile.jpg",
                 ),
               )
             ],

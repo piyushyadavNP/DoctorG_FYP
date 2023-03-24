@@ -9,6 +9,7 @@ import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/src/foundation/key.dart';
 import 'package:flutter/src/widgets/framework.dart';
+import 'package:intl/intl.dart';
 import '../widget/button.dart';
 import '../widget/logo_container.dart';
 import '../widget/textField.dart';
@@ -240,6 +241,7 @@ class _DoctorSignupState extends State<DoctorSignup> {
         "specialization": _specialization.text.trim(),
         "visitingDays": _vistingDays.text.trim(),
         "isAdmin": true,
+        "createdAt": DateTime.parse(Timestamp.now().toDate().toString()),
       }).then((value) =>
           AlertInfo(message: "Registration Success.").showInfo(context));
     } catch (ex) {
@@ -250,7 +252,7 @@ class _DoctorSignupState extends State<DoctorSignup> {
 
   String? validateButton(String? value) {
     log(value.toString());
-    if (value!.isEmpty || value == null) {
+    if (value!.isEmpty) {
       return 'Please Enter Some Text';
     }
     return null;

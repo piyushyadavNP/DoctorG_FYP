@@ -60,7 +60,7 @@ class _ProfileScreenState extends State<ProfileScreen>
                   left: 160,
                   radius: 40,
                   iconChild: IconButton(
-                    icon: Icon(Icons.person_outlined),
+                    icon:const  Icon(Icons.person_outlined),
                     onPressed: () {},
                   ),
                 ),
@@ -69,7 +69,7 @@ class _ProfileScreenState extends State<ProfileScreen>
                   left: 40,
                   radius: 20,
                   iconChild: IconButton(
-                    icon: Icon(Icons.cancel_outlined),
+                    icon: const Icon(Icons.cancel_outlined),
                     onPressed: () {
                       Navigator.pop(context);
                     },
@@ -80,20 +80,20 @@ class _ProfileScreenState extends State<ProfileScreen>
                   right: 40,
                   radius: 20,
                   iconChild: IconButton(
-                    icon: Icon(Icons.settings),
+                    icon: const Icon(Icons.settings),
                     onPressed: () {},
                   ),
                 ),
               ],
             ),
-            SizedBox(
+            const SizedBox(
               height: 10,
             ),
             Text(
               "Piyush Yadav",
               style: AppTextStyle.headline2,
             ),
-            SizedBox(
+            const SizedBox(
               height: 5,
             ),
             Text(
@@ -111,11 +111,11 @@ class _ProfileScreenState extends State<ProfileScreen>
                 ),
               ],
             ),
-            SizedBox(
+            const SizedBox(
               height: 10,
             ),
-            CommonSingleCard(),
-            SizedBox(
+            const CommonSingleCard(),
+            const SizedBox(
               height: 10,
             ),
             Row(
@@ -133,8 +133,8 @@ class _ProfileScreenState extends State<ProfileScreen>
                 ),
               ],
             ),
-            CommonTabbar(),
-            SizedBox(
+            const CommonTabbar(),
+            const SizedBox(
               height: 20,
             ),
             Row(
