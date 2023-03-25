@@ -240,7 +240,7 @@ class _DoctorSignupState extends State<DoctorSignup> {
         "mobile": _mobile.text.trim(),
         "specialization": _specialization.text.trim(),
         "visitingDays": _vistingDays.text.trim(),
-        "isAdmin": true,
+        "isDoctor": true,
         "createdAt": DateTime.parse(Timestamp.now().toDate().toString()),
       }).then((value) =>
           AlertInfo(message: "Registration Success.").showInfo(context));

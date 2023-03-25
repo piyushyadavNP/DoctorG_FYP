@@ -3,6 +3,7 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/src/widgets/container.dart';
 import 'package:flutter/src/widgets/framework.dart';
+import 'package:timelines/timelines.dart';
 
 class AppointmentInfoCard extends StatefulWidget {
   const AppointmentInfoCard({super.key});
@@ -27,19 +28,18 @@ class _AppointmentInfoCardState extends State<AppointmentInfoCard> {
           builder: (context, snapshot) {
             if (snapshot.hasData) {
               return ListView(
-                children: snapshot.data!.docs.map(
-                  (doc) {
-                    return Card(
-                      child: ListTile(
-                        leading: Text(doc['userName']),
-                        trailing: Text(doc['symptoms']),
-                        title: Text(doc['date']),
-                        subtitle: Text(doc['time']),
-                      ),
-                    );
-                  },
-                ).toList(),
-              );
+                  children: snapshot.data!.docs.map(
+                (doc) {
+                  return Card(
+                    child: ListTile(
+                      leading: Text(doc['userName']),
+                      trailing: Text(doc['symptoms']),
+                      title: Text(doc['date']),
+                      subtitle: Text(doc['time']),
+                    ),
+                  );
+                },
+              ).toList());
             } else {
               return const CircularProgressIndicator();
             }
