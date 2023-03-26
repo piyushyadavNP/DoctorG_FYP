@@ -48,15 +48,11 @@ class _DoctorPageState extends State<DoctorPage> {
       ),
       floatingActionButton: Stack(
         children: [
-          Positioned(
-            bottom: 50,
-            child: FloatingActionButton(
-              onPressed: () {},
-              backgroundColor: Colors.red,
-            ),
-          ),
           FloatingActionButton(
-            backgroundColor: Colors.green,
+            child: IconButton(
+              onPressed: () {},
+              icon: const Icon(Icons.menu),
+            ),
             onPressed: () {},
           ),
         ],
