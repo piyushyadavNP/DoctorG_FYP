@@ -231,6 +231,10 @@ class _DoctorSignupState extends State<DoctorSignup> {
           .createUserWithEmailAndPassword(
               email: _emailController.text, password: _paswordController.text);
 
+      // Sending Email Verification
+      log("Sening Email Verification ${userCredential.user}");
+      await userCredential.user!.sendEmailVerification();
+
       // Set Doctor Display Name
       userCredential.user!.updateDisplayName(
           "${_firstnameController.text.trim()} ${_lastnameController.text.trim()}");
@@ -251,7 +255,8 @@ class _DoctorSignupState extends State<DoctorSignup> {
             "createdAt": DateTime.parse(Timestamp.now().toDate().toString()),
           })
           .then((value) => AlertInfo(
-                  message: "Registration Success.",
+                  message: "Registration Success"
+                      ". Email Verifaction Sent To Your Email",
                   isSuccess: true,
                   backgroundColor: successAlert)
               .showInfo(context))

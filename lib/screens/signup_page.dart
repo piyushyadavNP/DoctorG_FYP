@@ -267,6 +267,10 @@ class _SignupState extends State<Signup> {
       userCredential = await FirebaseAuth.instance
           .createUserWithEmailAndPassword(
               email: _emailController.text, password: _paswordController.text);
+      
+      // Sending Email Verification
+      log("Sening Email Verification ${userCredential.user}");
+      await userCredential.user!.sendEmailVerification();
 
       // Set User Display Name
       userCredential.user!.updateDisplayName(

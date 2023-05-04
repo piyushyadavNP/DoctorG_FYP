@@ -22,6 +22,7 @@ class LoginPage extends StatefulWidget {
 }
 
 class _LoginPageState extends State<LoginPage> {
+  User? currentUser;
   late String message;
   FirebaseAuth auth = FirebaseAuth.instance;
   final _formKey = GlobalKey<FormState>();
@@ -29,11 +30,13 @@ class _LoginPageState extends State<LoginPage> {
       TextEditingController(text: "");
   final TextEditingController _passwordController =
       TextEditingController(text: "");
+  bool? showResendButton = false;
   @override
   void initState() {
     _emailController.text = "";
     _passwordController.text = "";
     message = "Login";
+    showResendButton = false;
     super.initState();
   }
 
@@ -136,9 +139,23 @@ class _LoginPageState extends State<LoginPage> {
             const SizedBox(
               height: 15,
             ),
-            const SizedBox(
-              height: 15,
-            ),
+            showResendButton!
+                ? Row(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      Padding(
+                        padding: const EdgeInsets.only(left: 20.0, top: 20),
+                        child: InkWell(
+                          onTap: () => currentUser!.sendEmailVerification(),
+                          child: Text(
+                            "Resent Verification Email",
+                            style: AppTextStyle.inkWell,
+                          ),
+                        ),
+                      ),
+                    ],
+                  )
+                : const SizedBox(),
           ],
         ),
       ),
@@ -147,11 +164,20 @@ class _LoginPageState extends State<LoginPage> {
 
   Future<void> login() async {
     if (_formKey.currentState!.validate()) {
+      UserCredential userCredential;
       try {
-        UserCredential userCredential = await FirebaseAuth.instance
-            .signInWithEmailAndPassword(
-                email: _emailController.text,
-                password: _passwordController.text);
+        userCredential = await FirebaseAuth.instance.signInWithEmailAndPassword(
+            email: _emailController.text, password: _passwordController.text);
+
+        bool? isEmailVerified = userCredential.user!.emailVerified;
+        if (!isEmailVerified) {
+          showResendButton = true;
+          setState(() {
+            currentUser = userCredential.user;
+            message = "Email Not Verified";
+          });
+          return;
+        }
         bool? isDoctor = await checkUserType(userCredential);
 
         if (userCredential.user == null) {}
