@@ -43,7 +43,7 @@ class _MainPageState extends State<MainPage> with TickerProviderStateMixin {
           child: BottomNavigationBar(
             onTap: onTap,
             type: BottomNavigationBarType.fixed,
-            backgroundColor: primary,
+            backgroundColor: Theme.of(context).primaryColor,
             currentIndex: currentIndex,
             selectedItemColor: white,
             unselectedItemColor: secondary,

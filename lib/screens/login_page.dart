@@ -41,7 +41,7 @@ class _LoginPageState extends State<LoginPage> {
   Widget build(BuildContext context) {
     return Scaffold(
       resizeToAvoidBottomInset: false,
-      backgroundColor: primary,
+      backgroundColor: Theme.of(context).backgroundColor,
       body: SafeArea(
         child: Column(
           children: [
@@ -130,7 +130,7 @@ class _LoginPageState extends State<LoginPage> {
               isImage: false,
               onPressed: () => login(),
               size: MediaQuery.of(context).size.width * 0.9,
-              color: Colors.blue,
+              color: Theme.of(context).primaryColor,
               text: message,
             ),
             const SizedBox(

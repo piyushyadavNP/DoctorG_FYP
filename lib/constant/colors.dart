@@ -21,4 +21,6 @@ const Color shrineErrorRed = Color(0xFFC5032B);
 const Color shrineSurfaceWhite = Color.fromARGB(255, 252, 248, 246);
 const Color shrineBackgroundWhite = Colors.white;
 
+const Color successAlert = Colors.green;
+
 const defaultLetterSpacing = 0.03;

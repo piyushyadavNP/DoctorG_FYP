@@ -40,175 +40,179 @@ class _DoctorSignupState extends State<DoctorSignup> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      resizeToAvoidBottomInset: false,
+      resizeToAvoidBottomInset: true,
       backgroundColor: primary,
-      body: SafeArea(
-        child: Column(
-          children: [
-            Container(
-              margin: const EdgeInsets.only(top: 10),
-              child: LogoName(
-                height: 20,
-                width: 20,
-                textSize: 18,
+      body: SingleChildScrollView(
+        child: SafeArea(
+          child: Column(
+            children: [
+              Container(
+                margin: const EdgeInsets.only(top: 10),
+                child: LogoName(
+                  height: 20,
+                  width: 20,
+                  textSize: 18,
+                ),
               ),
-            ),
-            const SizedBox(
-              height: 40,
-            ),
-            Text("Sign Up", style: AppTextStyle.headline2),
-            Padding(
-              padding: const EdgeInsets.all(8.0),
-              child: Text(
-                textAlign: TextAlign.center,
-                "Create an account to access healthcare, and more.",
-                style: AppTextStyle.subtitle1,
+              const SizedBox(
+                height: 40,
               ),
-            ),
-            Padding(
-              padding: const EdgeInsets.all(8.0),
-              child: Row(
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: [
-                  Text(
-                    "Already Have an account?",
-                    style: TextStyle(
-                        color: Colors.white.withOpacity(0.7), fontSize: 15),
-                  ),
-                  Padding(
-                    padding: const EdgeInsets.only(left: 2.0),
-                    child: GestureDetector(
-                      child: Text(
-                        "Login",
-                        style: AppTextStyle.inkWellLink,
+              Text("Sign Up", style: AppTextStyle.headline2),
+              Padding(
+                padding: const EdgeInsets.all(8.0),
+                child: Text(
+                  textAlign: TextAlign.center,
+                  "Create an account to access healthcare, and more.",
+                  style: AppTextStyle.subtitle1,
+                ),
+              ),
+              Padding(
+                padding: const EdgeInsets.all(8.0),
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    Text(
+                      "Already Have an account?",
+                      style: TextStyle(
+                          color: Colors.white.withOpacity(0.7), fontSize: 15),
+                    ),
+                    Padding(
+                      padding: const EdgeInsets.only(left: 2.0),
+                      child: GestureDetector(
+                        child: Text(
+                          "Login",
+                          style: AppTextStyle.inkWellLink,
+                        ),
+                        onTap: () {
+                          Navigator.pushReplacement(
+                              context,
+                              MaterialPageRoute(
+                                  builder: (context) => const LoginPage()));
+                        },
                       ),
-                      onTap: () {
-                        Navigator.pushReplacement(
-                            context,
-                            MaterialPageRoute(
-                                builder: (context) => const LoginPage()));
+                    ),
+                  ],
+                ),
+              ),
+              SizedBox(
+                height: 10,
+              ),
+              Form(
+                key: _formKey,
+                child: Column(
+                  children: [
+                    CommonTextField(
+                      validator: (value) {
+                        if (value!.isEmpty || value == null) {
+                          return "First Name Can't Be Empty";
+                        }
+                        return null;
+                      },
+                      labelText: "First Name",
+                      controller: _firstnameController,
+                    ),
+                    CommonTextField(
+                      labelText: "Last Name",
+                      controller: _lastnameController,
+                      validator: (value) {
+                        if (value!.isEmpty) {
+                          return "Last Name Can't Be Empty";
+                        }
+                        return null;
                       },
                     ),
-                  ),
-                ],
+                    CommonTextField(
+                      labelText: "Email Address",
+                      controller: _emailController,
+                      validator: (value) {
+                        if (value!.isEmpty) {
+                          return "Email Address Can't Be Empty";
+                        }
+                        return null;
+                      },
+                    ),
+                    CommonTextField(
+                      labelText: "Password",
+                      controller: _paswordController,
+                      validator: (value) {
+                        if (value!.isEmpty) {
+                          return "Password Can't Be Empty";
+                        }
+                        return null;
+                      },
+                    ),
+                    CommonTextField(
+                      labelText: "NMC No",
+                      controller: _nmcNo,
+                      validator: (value) {
+                        if (value!.isEmpty) {
+                          return "MNC No Can't Be Empty";
+                        }
+                        return null;
+                      },
+                    ),
+                    CommonTextField(
+                      labelText: "Mobile Number",
+                      controller: _mobile,
+                      validator: (value) {
+                        if (value!.isEmpty) {
+                          return "Mobile Number Can't Be Empty";
+                        } else if (value.length != 10) {
+                          return "Phone Length Must Be 10";
+                        }
+                        return null;
+                      },
+                    ),
+                    CommonTextField(
+                      labelText: "Specilization",
+                      controller: _specialization,
+                      validator: (value) {
+                        if (value!.isEmpty) {
+                          return "Specialization Can't Be Empty";
+                        }
+                        return null;
+                      },
+                    ),
+                    CommonTextField(
+                      labelText: "Visting Hospital/Clinic",
+                      controller: _vistingDays,
+                      validator: (value) {
+                        if (value!.isEmpty) {
+                          return "Field Can't Be Empty";
+                        }
+                        return null;
+                      },
+                    ),
+                  ],
+                ),
               ),
-            ),
-            SizedBox(
-              height: 10,
-            ),
-            Form(
-              key: _formKey,
-              child: Column(
-                children: [
-                  CommonTextField(
-                    validator: (value) {
-                      if (value!.isEmpty || value == null) {
-                        return "First Name Can't Be Empty";
-                      }
-                      return null;
-                    },
-                    labelText: "First Name",
-                    controller: _firstnameController,
-                  ),
-                  CommonTextField(
-                    labelText: "Last Name",
-                    controller: _lastnameController,
-                    validator: (value) {
-                      if (value!.isEmpty) {
-                        return "Last Name Can't Be Empty";
-                      }
-                      return null;
-                    },
-                  ),
-                  CommonTextField(
-                    labelText: "Email Address",
-                    controller: _emailController,
-                    validator: (value) {
-                      if (value!.isEmpty) {
-                        return "Email Address Can't Be Empty";
-                      }
-                      return null;
-                    },
-                  ),
-                  CommonTextField(
-                    labelText: "Password",
-                    controller: _paswordController,
-                    validator: (value) {
-                      if (value!.isEmpty) {
-                        return "Password Can't Be Empty";
-                      }
-                      return null;
-                    },
-                  ),
-                  CommonTextField(
-                    labelText: "NMC No",
-                    controller: _nmcNo,
-                    validator: (value) {
-                      if (value!.isEmpty) {
-                        return "MNC No Can't Be Empty";
-                      }
-                      return null;
-                    },
-                  ),
-                  CommonTextField(
-                    labelText: "Mobile Number",
-                    controller: _mobile,
-                    validator: (value) {
-                      if (value!.isEmpty) {
-                        return "Mobile Number Can't Be Empty";
-                      }
-                      return null;
-                    },
-                  ),
-                  CommonTextField(
-                    labelText: "Specilization",
-                    controller: _specialization,
-                    validator: (value) {
-                      if (value!.isEmpty) {
-                        return "Specialization Can't Be Empty";
-                      }
-                      return null;
-                    },
-                  ),
-                  CommonTextField(
-                    labelText: "Visting Hospital/Clinic",
-                    controller: _vistingDays,
-                    validator: (value) {
-                      if (value!.isEmpty) {
-                        return "Field Can't Be Empty";
-                      }
-                      return null;
-                    },
-                  ),
-                ],
+              SizedBox(
+                height: 10,
               ),
-            ),
-            SizedBox(
-              height: 10,
-            ),
-            MaterialCommonButton(
-                isImage: false,
-                color: Colors.blue,
-                text: "Create an account",
-                onPressed: () {
-                  DoctorSignup();
-                },
-                size: MediaQuery.of(context).size.width * 0.9),
-            SizedBox(
-              height: 15,
-            ),
-            Padding(
-              padding: const EdgeInsets.all(8.0),
-              child: Text(
-                textAlign: TextAlign.center,
-                "Customize your visting date and time after signup.",
-                style: AppTextStyle.subtitle2,
+              MaterialCommonButton(
+                  isImage: false,
+                  color: Colors.blue,
+                  text: "Create an account",
+                  onPressed: () {
+                    DoctorSignup();
+                  },
+                  size: MediaQuery.of(context).size.width * 0.9),
+              SizedBox(
+                height: 15,
               ),
-            ),
-            SizedBox(
-              height: 10,
-            ),
-          ],
+              Padding(
+                padding: const EdgeInsets.all(8.0),
+                child: Text(
+                  textAlign: TextAlign.center,
+                  "Customize your visting date and time after signup.",
+                  style: AppTextStyle.subtitle2,
+                ),
+              ),
+              SizedBox(
+                height: 10,
+              ),
+            ],
+          ),
         ),
       ),
     );
@@ -232,21 +236,34 @@ class _DoctorSignupState extends State<DoctorSignup> {
           "${_firstnameController.text.trim()} ${_lastnameController.text.trim()}");
 
       // Store Doctor Additional Info to doctor
-      db.collection('doctor').doc(userCredential.user!.uid).set({
-        "name":
-            "${_firstnameController.text.trim()} ${_lastnameController.text.trim()}",
-        "email": _emailController.text.trim(),
-        "nmcNo": _nmcNo.text.trim(),
-        "mobile": _mobile.text.trim(),
-        "specialization": _specialization.text.trim(),
-        "visitingDays": _vistingDays.text.trim(),
-        "isDoctor": true,
-        "createdAt": DateTime.parse(Timestamp.now().toDate().toString()),
-      }).then((value) =>
-          AlertInfo(message: "Registration Success.").showInfo(context));
+      db
+          .collection('doctor')
+          .doc(userCredential.user!.uid)
+          .set({
+            "name":
+                "${_firstnameController.text.trim()} ${_lastnameController.text.trim()}",
+            "email": _emailController.text.trim(),
+            "nmcNo": _nmcNo.text.trim(),
+            "mobile": _mobile.text.trim(),
+            "specialization": _specialization.text.trim(),
+            "visitingDays": _vistingDays.text.trim(),
+            "isDoctor": true,
+            "createdAt": DateTime.parse(Timestamp.now().toDate().toString()),
+          })
+          .then((value) => AlertInfo(
+                  message: "Registration Success.",
+                  isSuccess: true,
+                  backgroundColor: successAlert)
+              .showInfo(context))
+          // Push Back To Login Page After Successful Registration
+          .then((value) => Navigator.pushReplacementNamed(context, '/'));
     } catch (ex) {
       log(ex.toString());
-      AlertInfo(message: "Registration Failed.").showInfo(context);
+      AlertInfo(
+              message: "Registration Failed.",
+              isSuccess: false,
+              backgroundColor: shrineErrorRed)
+          .showInfo(context);
     }
   }
 

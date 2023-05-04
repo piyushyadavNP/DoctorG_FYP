@@ -25,7 +25,8 @@ class UserInfoCard extends StatelessWidget {
           width: MediaQuery.of(context).size.width,
           height: MediaQuery.of(context).size.height / 4,
           decoration: BoxDecoration(
-              borderRadius: BorderRadius.circular(5.0), color: primary),
+              borderRadius: BorderRadius.circular(5.0),
+              color: Theme.of(context).backgroundColor),
         ),
       ),
       Positioned(

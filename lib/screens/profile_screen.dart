@@ -205,12 +205,17 @@ class _ProfileScreenState extends State<ProfileScreen>
       await ref.putFile(_photo!).then((p0) {
         ref.getDownloadURL().then(
             (value) => dbRef.doc(user!.uid).update({"profileImage": value}));
-        AlertInfo(message: "Profile Pic Uploaded Successfully")
+        AlertInfo(
+                message: "Profile Pic Uploaded Successfully",
+                isSuccess: true,
+                backgroundColor: successAlert)
             .showInfo(context);
       });
     } catch (e) {
       log("Error In Uploading Profile Pic");
-      AlertInfo(message: "Error WHile Uploading").showInfo(context);
+      AlertInfo(
+              message: "Error WHile Uploading", backgroundColor: shrineErrorRed)
+          .showInfo(context);
     }
   }
 }

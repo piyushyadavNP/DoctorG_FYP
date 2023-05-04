@@ -18,7 +18,7 @@ class CommonSingleCard extends StatelessWidget {
       decoration:
           BoxDecoration(borderRadius: BorderRadius.all(Radius.circular(20))),
       child: Card(
-        color: secondary,
+        color: Theme.of(context).backgroundColor,
         child: Padding(
           padding:
               const EdgeInsets.only(top: 10.0, left: 20, bottom: 10, right: 10),
