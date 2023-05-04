@@ -5,6 +5,7 @@ import 'package:doctor/provider/counter.dart';
 import 'package:doctor/screens/appointment_page.dart';
 import 'package:doctor/screens/counter_page.dart';
 import 'package:doctor/screens/doctor_page.dart';
+import 'package:doctor/screens/forgot_password.dart';
 import 'package:doctor/screens/homePage.dart';
 import 'package:doctor/screens/login_page.dart';
 import 'package:doctor/screens/profile_screen.dart';
@@ -55,6 +56,7 @@ class MyApp extends StatelessWidget {
           '/book': (context) => const AppointmentPage(),
           '/doctorPage': (context) => const DoctorPage(),
           '/profile': (context) => const ProfileScreen(),
+          '/forgotPassword': (context) => const ForgotPassword(),
         },
       ),
     );

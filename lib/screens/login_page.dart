@@ -56,11 +56,11 @@ class _LoginPageState extends State<LoginPage> {
                 textSize: 18,
               ),
             ),
-            SizedBox(
+            const SizedBox(
               height: 40,
             ),
             Text("Login", style: AppTextStyle.headline3),
-            SizedBox(
+            const SizedBox(
               height: 15,
             ),
             Row(mainAxisAlignment: MainAxisAlignment.center, children: [
@@ -119,9 +119,13 @@ class _LoginPageState extends State<LoginPage> {
               children: [
                 Padding(
                   padding: const EdgeInsets.only(left: 20.0, top: 20),
-                  child: Text(
-                    "Forgot your password?",
-                    style: AppTextStyle.inkWell,
+                  child: InkWell(
+                    onTap: () =>
+                        Navigator.pushNamed(context, '/forgotPassword'),
+                    child: Text(
+                      "Forgot your password?",
+                      style: AppTextStyle.inkWell,
+                    ),
                   ),
                 ),
               ],
@@ -146,6 +150,7 @@ class _LoginPageState extends State<LoginPage> {
                       Padding(
                         padding: const EdgeInsets.only(left: 20.0, top: 20),
                         child: InkWell(
+                          // Resend Email Verification
                           onTap: () => currentUser!.sendEmailVerification(),
                           child: Text(
                             "Resent Verification Email",
