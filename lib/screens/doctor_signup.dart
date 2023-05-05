@@ -5,16 +5,11 @@ import 'package:doctor/common/alert_info.dart';
 import 'package:doctor/constant/colors.dart';
 import 'package:doctor/common/text_style.dart';
 import 'package:firebase_auth/firebase_auth.dart';
-import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/src/foundation/key.dart';
-import 'package:flutter/src/widgets/framework.dart';
-import 'package:intl/intl.dart';
 import '../widget/button.dart';
 import '../widget/logo_container.dart';
 import '../widget/textField.dart';
 import 'login_page.dart';
-import 'navbar.dart';
 
 class DoctorSignup extends StatefulWidget {
   const DoctorSignup({Key? key}) : super(key: key);

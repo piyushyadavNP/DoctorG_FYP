@@ -6,17 +6,13 @@ import 'package:doctor/screens/doctor_signup.dart';
 import 'package:doctor/common/text_style.dart';
 import 'package:doctor/widget/drop_down.dart';
 import 'package:firebase_auth/firebase_auth.dart';
-import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/src/foundation/key.dart';
-import 'package:flutter/src/widgets/framework.dart';
 
 import '../common/alert_info.dart';
 import '../widget/button.dart';
 import '../widget/logo_container.dart';
 import '../widget/textField.dart';
 import 'login_page.dart';
-import 'navbar.dart';
 
 class Signup extends StatefulWidget {
   const Signup({Key? key}) : super(key: key);

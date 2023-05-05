@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-
 import '../constant/colors.dart';
 
 const ColorScheme _shrineColorScheme = ColorScheme(

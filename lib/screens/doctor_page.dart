@@ -1,7 +1,6 @@
 import 'package:doctor/common/appointment_list.dart';
 import 'package:doctor/common/user_info_card.dart';
 import 'package:flutter/material.dart';
-import 'package:timelines/timelines.dart';
 
 class DoctorPage extends StatefulWidget {
   const DoctorPage({Key? key}) : super(key: key);

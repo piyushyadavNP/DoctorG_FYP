@@ -8,7 +8,6 @@ import 'package:intl/intl.dart';
 import 'package:table_calendar/table_calendar.dart';
 
 import '../common/user_info_card.dart';
-import '../constant/colors.dart';
 
 class AppointmentPage extends StatefulWidget {
   final String? doctorName;

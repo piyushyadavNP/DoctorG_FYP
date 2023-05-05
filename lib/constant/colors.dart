@@ -1,4 +1,3 @@
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
 const gradientCardColor = [Color(0xFFBFACE2), Color(0xFF655DBB)];

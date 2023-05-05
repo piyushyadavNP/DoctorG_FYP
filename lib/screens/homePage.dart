@@ -1,8 +1,5 @@
 import 'package:doctor/common/categories_card.dart';
 import 'package:doctor/common/doctorCard.dart';
-import 'package:doctor/constant/colors.dart';
-import 'package:doctor/mock/doctorList.dart';
-import 'package:doctor/screens/appointment_page.dart';
 import 'package:flutter/material.dart';
 
 import '../common/user_info_card.dart';
