@@ -1,3 +1,8 @@
+import 'dart:developer';
+
+import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_auth/firebase_auth.dart';
+import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/src/widgets/container.dart';
 import 'package:flutter/src/widgets/framework.dart';
@@ -15,8 +20,16 @@ class ForgotPassword extends StatefulWidget {
 }
 
 class _ForgotPasswordState extends State<ForgotPassword> {
+  final _auth = FirebaseAuth.instance;
   final TextEditingController _emailController =
       TextEditingController(text: "");
+  String? buttonLabel;
+  @override
+  void initState() {
+    buttonLabel = "Reset Password";
+    super.initState();
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -52,13 +65,35 @@ class _ForgotPasswordState extends State<ForgotPassword> {
           ),
           MaterialCommonButton(
             isImage: false,
-            onPressed: () {},
+            onPressed: () => getUserByEmailAndSendPasswordResetLink(
+                _emailController.text.trim()),
             size: MediaQuery.of(context).size.width * 0.9,
             color: Theme.of(context).primaryColor,
-            text: "Reset Password",
+            text: buttonLabel,
           ),
         ],
       )),
     );
+  }
+
+// Get User From List  
+  getUserByEmailAndSendPasswordResetLink(String email) async {
+    bool isExists = false;
+    // Fetch Email Existence From Authentication Lists
+    await _auth.fetchSignInMethodsForEmail(email).then((value) {
+      value.isNotEmpty ? isExists = true : isExists = false;
+    });
+    log("Email Exists $isExists");
+    if (!isExists) {
+      setState(() {
+        buttonLabel = "Sorry User Don't Exists";
+      });
+      return;
+    }
+    setState(() {
+      buttonLabel = "Check Your Email";
+    });
+
+    _auth.sendPasswordResetEmail(email: email);
   }
 }
