@@ -27,7 +27,7 @@ class _DoctorSignupState extends State<DoctorSignup> {
   final TextEditingController _nmcNo = TextEditingController();
   final TextEditingController _mobile = TextEditingController();
   final TextEditingController _specialization = TextEditingController();
-  final TextEditingController _vistingDays = TextEditingController();
+  final TextEditingController _vistingHospital = TextEditingController();
   final TextEditingController _qualification = TextEditingController();
 
   final _formKey = GlobalKey<FormState>();
@@ -232,7 +232,7 @@ class _DoctorSignupState extends State<DoctorSignup> {
                     ),
                     CommonTextField(
                       labelText: "Visting Hospital/Clinic",
-                      controller: _vistingDays,
+                      controller: _vistingHospital,
                       validator: (value) {
                         if (value!.isEmpty) {
                           return "Field Can't Be Empty";
@@ -308,7 +308,7 @@ class _DoctorSignupState extends State<DoctorSignup> {
             "nmcNo": _nmcNo.text.trim(),
             "mobile": _mobile.text.trim(),
             "specialization": categories!.trim(),
-            "visitingDays": _vistingDays.text.trim(),
+            "visitingHospital": _vistingHospital.text.trim(),
             "isDoctor": true,
             "createdAt": DateTime.parse(Timestamp.now().toDate().toString()),
           })

@@ -1,3 +1,5 @@
+import 'dart:developer';
+
 import 'package:doctor/common/categories_card.dart';
 import 'package:doctor/common/doctorCard.dart';
 import 'package:flutter/material.dart';
@@ -12,6 +14,7 @@ class HomePage extends StatefulWidget {
 }
 
 class _HomePageState extends State<HomePage> {
+  String? query = "";
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -21,6 +24,11 @@ class _HomePageState extends State<HomePage> {
           UserInfoCard(
             name: "Mamit",
             profileIcon: true,
+            onChanged: (value) {
+              setState(() {
+                query = value;
+              });
+            },
           ),
           const SizedBox(
             height: 10,
@@ -37,7 +45,11 @@ class _HomePageState extends State<HomePage> {
             "Available Doctors",
             style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
           ),
-          Flexible(child: DoctorCard()),
+          Flexible(
+              child: DoctorCard(
+            search: true,
+            query: query!,
+          )),
         ],
       )),
     );

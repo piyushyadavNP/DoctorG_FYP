@@ -2,6 +2,7 @@ import 'dart:developer';
 
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:doctor/constant/colors.dart';
+import 'package:doctor/constant/const.dart';
 import 'package:doctor/screens/doctor_signup.dart';
 import 'package:doctor/common/text_style.dart';
 import 'package:doctor/widget/drop_down.dart';
@@ -334,6 +335,7 @@ class _SignupState extends State<Signup> {
             "phone": _phoneController.text.trim(),
             "isAdmin": false,
             "createdAt": DateTime.parse(Timestamp.now().toDate().toString()),
+            "profileImage": profileImageDefault
           })
           .then((value) =>
               // Show Success Message

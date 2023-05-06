@@ -30,6 +30,8 @@ class _LoginPageState extends State<LoginPage> {
       TextEditingController(text: "");
   bool? showResendButton = false;
   bool? hidePassword;
+  String? specialization;
+  String? nmcNo;
   @override
   void initState() {
     _emailController.text = "";
@@ -38,6 +40,8 @@ class _LoginPageState extends State<LoginPage> {
     showResendButton = false;
     hidePassword = true;
     super.initState();
+    specialization = "";
+    nmcNo = "";
   }
 
   @override
@@ -208,8 +212,11 @@ class _LoginPageState extends State<LoginPage> {
 
         if (userCredential.user == null) {}
         if (isDoctor!) {
-          Navigator.pushNamed(context, '/doctorPage',
-              arguments: {"isDoctor": isDoctor});
+          Navigator.pushNamed(context, '/doctorPage', arguments: {
+            "isDoctor": isDoctor,
+            "specialization": specialization,
+            "nmcNo": nmcNo
+          });
           return;
         }
         Navigator.pushNamed(context, '/home');
@@ -247,6 +254,11 @@ class _LoginPageState extends State<LoginPage> {
           .then((value) {
         log("Value ${value.data()!['isDoctor']}");
         result = value.data()!['isDoctor'];
+        setState(() {
+          specialization =
+              "${value.data()!['specialization']}/${value.data()!['qualification']}";
+          nmcNo = value.data()!['nmcNo'];
+        });
       });
       return result;
     } catch (ex) {

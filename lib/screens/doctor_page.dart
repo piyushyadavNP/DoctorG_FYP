@@ -12,11 +12,15 @@ class DoctorPage extends StatefulWidget {
 class _DoctorPageState extends State<DoctorPage> {
   bool? isDoctor;
   String? doctorName;
+  String? specialization;
+  String? nmcNo;
 
   @override
   void didChangeDependencies() {
     final arguments = ModalRoute.of(context)!.settings.arguments as Map;
     isDoctor = arguments['isDoctor'];
+    specialization = arguments['specialization'];
+    nmcNo = arguments['nmcNo'];
 
     super.didChangeDependencies();
   }
@@ -30,6 +34,8 @@ class _DoctorPageState extends State<DoctorPage> {
             children: [
               UserInfoCard(
                 profileIcon: false,
+                specialization: specialization,
+                nmcNo: nmcNo,
               ),
               Container(
                 margin: const EdgeInsets.all(10),

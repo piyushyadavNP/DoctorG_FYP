@@ -4,9 +4,11 @@ import 'dart:io';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:doctor/common/alert_info.dart';
 import 'package:doctor/constant/colors.dart';
+import 'package:doctor/screens/invstigation_report.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_storage/firebase_storage.dart';
 import 'package:image_picker/image_picker.dart';
+import 'package:intl/intl.dart';
 import 'package:path/path.dart';
 import '../common/text_style.dart';
 import 'package:flutter/material.dart';
@@ -28,26 +30,45 @@ class _ProfileScreenState extends State<ProfileScreen>
   File? _photo;
   final ImagePicker _picker = ImagePicker();
   String? profileImageLocation;
+  String? userName = "";
+  String? joinedDate = "";
   final user = FirebaseAuth.instance.currentUser;
-
+  final db = FirebaseFirestore.instance;
   @override
   void initState() {
     scrollController;
     getProfileImage();
+    getUserInfo();
     TabController tabController = TabController(length: 2, vsync: this);
     super.initState();
   }
 
   Future getProfileImage() async {
-    await FirebaseFirestore.instance
-        .collection("users")
-        .doc(user!.uid)
-        .get()
-        .then((value) {
-      setState(() {
-        profileImageLocation = value["profileImage"].toString();
+    try {
+      await FirebaseFirestore.instance
+          .collection("users")
+          .doc(user!.uid)
+          .get()
+          .then((value) {
+        setState(() {
+          profileImageLocation = value["profileImage"].toString();
+        });
+        log(profileImageLocation!);
       });
-      log(profileImageLocation!);
+    } catch (e) {
+      profileImageLocation =
+          "https://firebasestorage.googleapis.com/v0/b/doctorg-abf97.appspot.com/o/files%2Fistockphoto-1406197730-1024x1024.jpg?alt=media&token=f37bd4d9-01f0-44cf-b405-7d26dc4bacc2";
+    }
+  }
+
+  Future getUserInfo() async {
+    await db.collection("users").doc(user!.uid).get().then((value) {
+      // Convert TimeStamp to DateTime
+      DateTime dt = (value['createdAt'] as Timestamp).toDate();
+      setState(() {
+        userName = value["name"].toString();
+        joinedDate = DateFormat('MM/dd/yyyy').format(dt);
+      });
     });
   }
 
@@ -128,14 +149,14 @@ class _ProfileScreenState extends State<ProfileScreen>
               height: 10,
             ),
             Text(
-              "Piyush Yadav",
+              userName!,
               style: AppTextStyle.headline2,
             ),
             const SizedBox(
               height: 5,
             ),
             Text(
-              "Joined in 2022",
+              joinedDate!,
               style: AppTextStyle.subtitle1,
             ),
             Row(
@@ -149,13 +170,6 @@ class _ProfileScreenState extends State<ProfileScreen>
                 ),
               ],
             ),
-            const SizedBox(
-              height: 10,
-            ),
-            const CommonSingleCard(),
-            const SizedBox(
-              height: 10,
-            ),
             Row(
               children: [
                 Column(
@@ -163,7 +177,7 @@ class _ProfileScreenState extends State<ProfileScreen>
                     Padding(
                       padding: const EdgeInsets.only(left: 20.0),
                       child: Text(
-                        "Recent history",
+                        "Your Recent history",
                         style: AppTextStyle.headline3,
                       ),
                     ),
@@ -171,7 +185,6 @@ class _ProfileScreenState extends State<ProfileScreen>
                 ),
               ],
             ),
-            const CommonTabbar(),
             const SizedBox(
               height: 20,
             ),

@@ -4,14 +4,16 @@ import 'package:flutter/material.dart';
 class UserInfoCard extends StatelessWidget {
   bool? profileIcon;
   String? name;
-  String? specialization;
+  String? specialization = "";
   String? nmcNo;
+  void Function(String)? onChanged;
 
   UserInfoCard({
     this.name,
     this.profileIcon,
     this.specialization,
     this.nmcNo,
+    this.onChanged,
     Key? key,
   }) : super(key: key);
 
@@ -110,8 +112,9 @@ class UserInfoCard extends StatelessWidget {
                     decoration: BoxDecoration(
                         border: Border.all(color: Colors.white),
                         borderRadius: BorderRadius.circular(10)),
-                    child: const TextField(
-                      decoration: InputDecoration(
+                    child: TextField(
+                      onChanged: onChanged,
+                      decoration: const InputDecoration(
                         border: InputBorder.none,
                         contentPadding: EdgeInsets.all(20),
                         hintStyle: TextStyle(fontSize: 17, color: Colors.white),

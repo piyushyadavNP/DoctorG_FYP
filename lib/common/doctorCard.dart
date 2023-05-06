@@ -1,32 +1,74 @@
+import 'dart:developer';
+
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 
 import '../screens/appointment_page.dart';
 
-class DoctorCard extends StatelessWidget {
+class DoctorCard extends StatefulWidget {
   bool? doctorByCategory;
   String? specialization;
-  DoctorCard({Key? key, this.doctorByCategory = false, this.specialization})
+  bool? search;
+  String? query = "";
+  DoctorCard(
+      {Key? key,
+      this.doctorByCategory = false,
+      this.specialization,
+      this.search = false,
+      this.query})
       : super(key: key);
 
+  @override
+  State<DoctorCard> createState() => _DoctorCardState();
+}
+
+class _DoctorCardState extends State<DoctorCard> {
   final db = FirebaseFirestore.instance;
+
+  Stream<QuerySnapshot<Object?>>? stremQuery;
+
+  @override
+  void initState() {
+    // TODO: implement initState
+    super.initState();
+    stremQuery = db.collection('doctor').snapshots();
+  }
 
   @override
   Widget build(BuildContext context) {
+    setState(() {
+      log("Up Here, ${widget.query}");
+      if (widget.doctorByCategory!) {
+        stremQuery = db
+            .collection('doctor')
+            .where('specialization', isEqualTo: widget.specialization)
+            .snapshots();
+      } else if (widget.query!.isNotEmpty) {
+        stremQuery = db
+            .collection('doctor')
+            .where(
+              'name',
+              isGreaterThanOrEqualTo: widget.query!,
+              isLessThan: widget.query!.substring(0, widget.query!.length - 1) +
+                  String.fromCharCode(
+                      widget.query!.codeUnitAt(widget.query!.length - 1) + 1),
+            )
+            .snapshots();
+        log("Search True");
+      } else {
+        stremQuery = db.collection('doctor').snapshots();
+      }
+      log("Stremed Query, ${stremQuery!.first}");
+    });
     return Scaffold(
-      appBar: doctorByCategory!
+      appBar: widget.doctorByCategory!
           ? AppBar(
-              title: Text("$specialization"),
+              title: Text("${widget.specialization}"),
             )
           : null,
       body: SafeArea(
         child: StreamBuilder<QuerySnapshot>(
-            stream: doctorByCategory!
-                ? db
-                    .collection('doctor')
-                    .where('specialization', isEqualTo: specialization)
-                    .snapshots()
-                : db.collection('doctor').snapshots(),
+            stream: stremQuery,
             builder: (context, snapshot) {
               if (snapshot.hasData) {
                 return ListView(
@@ -40,7 +82,7 @@ class DoctorCard extends StatelessWidget {
                                 doctorId: doc.id,
                                 doctorName: "Dr." + doc['name'],
                                 specialization:
-                                    "${doc['specialization']} ${doc['qualification']}",
+                                    "${doc['specialization']} / ${doc['qualification']}",
                                 nmcNo: doc['nmcNo']),
                           ),
                         ),
@@ -51,8 +93,8 @@ class DoctorCard extends StatelessWidget {
                               fit: BoxFit.fitHeight,
                             ),
                             title: Text("Dr. ${doc['name']}"),
-                            subtitle: Text("${doc['specialization']} " +
-                                doc['qualification']),
+                            subtitle: Text(
+                                "${doc['specialization']} / ${doc['qualification']}"),
                           ),
                         ),
                       );
