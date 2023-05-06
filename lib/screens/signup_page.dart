@@ -37,6 +37,13 @@ class _SignupState extends State<Signup> {
   final _formKey = GlobalKey<FormState>();
   bool _isValidate = false;
   bool formIsValid = false;
+  bool? hidePassword;
+  @override
+  void initState() {
+    // TODO: implement initState
+    super.initState();
+    hidePassword = true;
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -165,6 +172,7 @@ class _SignupState extends State<Signup> {
                       },
                     ),
                     CommonTextField(
+                      obscureText: hidePassword!,
                       labelText: "Password",
                       controller: _paswordController,
                       validator: (value) {
@@ -173,8 +181,29 @@ class _SignupState extends State<Signup> {
                         }
                         return null;
                       },
+                      suffix: IconButton(
+                        icon: hidePassword!
+                            ? const Icon(
+                                Icons.visibility,
+                                color: white,
+                              )
+                            : const Icon(
+                                Icons.visibility_off,
+                                color: white,
+                              ),
+                        onPressed: () {
+                          setState(() {
+                            if (hidePassword!) {
+                              hidePassword = false;
+                            } else {
+                              hidePassword = true;
+                            }
+                          });
+                        },
+                      ),
                     ),
                     CommonTextField(
+                      obscureText: hidePassword!,
                       labelText: "Confirm Password",
                       controller: _confirmPaswordController,
                       validator: (value) {
@@ -186,6 +215,26 @@ class _SignupState extends State<Signup> {
                         }
                         return null;
                       },
+                      suffix: IconButton(
+                        icon: hidePassword!
+                            ? const Icon(
+                                Icons.visibility,
+                                color: white,
+                              )
+                            : const Icon(
+                                Icons.visibility_off,
+                                color: white,
+                              ),
+                        onPressed: () {
+                          setState(() {
+                            if (hidePassword!) {
+                              hidePassword = false;
+                            } else {
+                              hidePassword = true;
+                            }
+                          });
+                        },
+                      ),
                     ),
                   ],
                 ),
@@ -264,7 +313,7 @@ class _SignupState extends State<Signup> {
       userCredential = await FirebaseAuth.instance
           .createUserWithEmailAndPassword(
               email: _emailController.text, password: _paswordController.text);
-      
+
       // Sending Email Verification
       log("Sening Email Verification ${userCredential.user}");
       await userCredential.user!.sendEmailVerification();

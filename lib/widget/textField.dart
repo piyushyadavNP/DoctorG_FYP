@@ -7,6 +7,8 @@ class CommonTextField extends StatelessWidget {
   TextInputType? textInputType;
   String? errorText;
   bool? isDropdown;
+  double? width;
+  bool obscureText;
   CommonTextField(
       {Key? key,
       required this.labelText,
@@ -14,7 +16,9 @@ class CommonTextField extends StatelessWidget {
       this.errorText,
       this.textInputType,
       this.validator,
-      this.suffix})
+      this.suffix,
+      this.width,
+      this.obscureText = false})
       : super(key: key);
 
   String? Function(String?)? validator;
@@ -26,13 +30,16 @@ class CommonTextField extends StatelessWidget {
           data: Theme.of(context).copyWith(splashColor: Colors.white),
           child: Container(
               height: MediaQuery.of(context).size.height * 0.060,
-              width: MediaQuery.of(context).size.width * 0.9,
+              width: width != null
+                  ? width
+                  : MediaQuery.of(context).size.width * 0.9,
               decoration: BoxDecoration(
                   border: Border.all(
                     color: Color(0xFFFFFFFF).withOpacity(0.3),
                   ),
                   borderRadius: BorderRadius.circular(10)),
               child: TextFormField(
+                obscureText: obscureText,
                 validator: validator,
                 keyboardType: textInputType,
                 controller: controller,

@@ -1,6 +1,7 @@
 import 'dart:developer';
 
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:doctor/constant/colors.dart';
 import 'package:doctor/screens/signup_page.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/gestures.dart';
@@ -28,12 +29,14 @@ class _LoginPageState extends State<LoginPage> {
   final TextEditingController _passwordController =
       TextEditingController(text: "");
   bool? showResendButton = false;
+  bool? hidePassword;
   @override
   void initState() {
     _emailController.text = "";
     _passwordController.text = "";
     message = "Login";
     showResendButton = false;
+    hidePassword = true;
     super.initState();
   }
 
@@ -98,6 +101,7 @@ class _LoginPageState extends State<LoginPage> {
                     },
                   ),
                   CommonTextField(
+                    obscureText: hidePassword!,
                     labelText: "Password",
                     controller: _passwordController,
                     textInputType: TextInputType.name,
@@ -107,6 +111,26 @@ class _LoginPageState extends State<LoginPage> {
                       }
                       return null;
                     },
+                    suffix: IconButton(
+                      icon: hidePassword!
+                          ? const Icon(
+                              Icons.visibility,
+                              color: white,
+                            )
+                          : const Icon(
+                              Icons.visibility_off,
+                              color: white,
+                            ),
+                      onPressed: () {
+                        setState(() {
+                          if (hidePassword!) {
+                            hidePassword = false;
+                          } else {
+                            hidePassword = true;
+                          }
+                        });
+                      },
+                    ),
                   ),
                 ],
               ),

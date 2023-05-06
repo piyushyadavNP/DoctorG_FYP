@@ -28,11 +28,21 @@ class _DoctorSignupState extends State<DoctorSignup> {
   final TextEditingController _mobile = TextEditingController();
   final TextEditingController _specialization = TextEditingController();
   final TextEditingController _vistingDays = TextEditingController();
+  final TextEditingController _qualification = TextEditingController();
 
   final _formKey = GlobalKey<FormState>();
   bool _isValidate = false;
   bool formIsValid = false;
   String? categories;
+  bool? hidePassword;
+
+  @override
+  void initState() {
+    // TODO: implement initState
+    super.initState();
+    hidePassword = true;
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -97,22 +107,42 @@ class _DoctorSignupState extends State<DoctorSignup> {
                 key: _formKey,
                 child: Column(
                   children: [
-                    CommonTextField(
-                      validator: (value) {
-                        if (value!.isEmpty || value == null) {
-                          return "First Name Can't Be Empty";
-                        }
-                        return null;
-                      },
-                      labelText: "First Name",
-                      controller: _firstnameController,
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: [
+                        CommonTextField(
+                          width: MediaQuery.of(context).size.width * 0.43,
+                          validator: (value) {
+                            if (value!.isEmpty || value == null) {
+                              return "First Name Can't Be Empty";
+                            }
+                            return null;
+                          },
+                          labelText: "First Name",
+                          controller: _firstnameController,
+                        ),
+                        const SizedBox(
+                          width: 20,
+                        ),
+                        CommonTextField(
+                          width: MediaQuery.of(context).size.width * 0.43,
+                          labelText: "Last Name",
+                          controller: _lastnameController,
+                          validator: (value) {
+                            if (value!.isEmpty) {
+                              return "Last Name Can't Be Empty";
+                            }
+                            return null;
+                          },
+                        ),
+                      ],
                     ),
                     CommonTextField(
-                      labelText: "Last Name",
-                      controller: _lastnameController,
+                      labelText: "Qualification",
+                      controller: _qualification,
                       validator: (value) {
                         if (value!.isEmpty) {
-                          return "Last Name Can't Be Empty";
+                          return "Qualication Can't Be Empty";
                         }
                         return null;
                       },
@@ -128,6 +158,7 @@ class _DoctorSignupState extends State<DoctorSignup> {
                       },
                     ),
                     CommonTextField(
+                      obscureText: hidePassword!,
                       labelText: "Password",
                       controller: _paswordController,
                       validator: (value) {
@@ -136,6 +167,26 @@ class _DoctorSignupState extends State<DoctorSignup> {
                         }
                         return null;
                       },
+                      suffix: IconButton(
+                        icon: hidePassword!
+                            ? const Icon(
+                                Icons.visibility,
+                                color: white,
+                              )
+                            : const Icon(
+                                Icons.visibility_off,
+                                color: white,
+                              ),
+                        onPressed: () {
+                          setState(() {
+                            if (hidePassword!) {
+                              hidePassword = false;
+                            } else {
+                              hidePassword = true;
+                            }
+                          });
+                        },
+                      ),
                     ),
                     CommonTextField(
                       labelText: "NMC No",
@@ -253,6 +304,7 @@ class _DoctorSignupState extends State<DoctorSignup> {
             "name":
                 "${_firstnameController.text.trim()} ${_lastnameController.text.trim()}",
             "email": _emailController.text.trim(),
+            "qualification": _qualification.text.trim(),
             "nmcNo": _nmcNo.text.trim(),
             "mobile": _mobile.text.trim(),
             "specialization": categories!.trim(),
@@ -262,7 +314,7 @@ class _DoctorSignupState extends State<DoctorSignup> {
           })
           .then((value) => AlertInfo(
                   message: "Registration Success"
-                      ". Email Verifaction Sent To Your Email",
+                      ". Email Verifaction Sent",
                   isSuccess: true,
                   backgroundColor: successAlert)
               .showInfo(context))

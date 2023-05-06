@@ -61,9 +61,12 @@ class _DropDownFieldState extends State<DropDownField> {
                     ),
                   );
                 }).toList(),
-                hint: Text(
-                  widget.isCategories ? "Specilization" : "Gender",
-                  style: TextStyle(color: white, fontSize: 12),
+                hint: Padding(
+                  padding: const EdgeInsets.all(8.0),
+                  child: Text(
+                    widget.isCategories ? "Specilization" : "Gender",
+                    style: TextStyle(color: white, fontSize: 12),
+                  ),
                 ),
                 onChanged: widget.onChanged),
           ),
