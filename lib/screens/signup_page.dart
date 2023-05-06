@@ -143,6 +143,7 @@ class _SignupState extends State<Signup> {
                       },
                     ),
                     DropDownField(
+                      isCategories: false,
                       chosenValue: gender,
                       onChanged: (String? value) {
                         setState(() {

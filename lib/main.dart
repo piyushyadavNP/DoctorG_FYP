@@ -1,8 +1,9 @@
+import 'package:doctor/common/pdf_report.dart';
 import 'package:doctor/provider/counter.dart';
 import 'package:doctor/screens/appointment_page.dart';
-import 'package:doctor/screens/counter_page.dart';
 import 'package:doctor/screens/doctor_page.dart';
 import 'package:doctor/screens/forgot_password.dart';
+import 'package:doctor/screens/invstigation_report.dart';
 import 'package:doctor/screens/login_page.dart';
 import 'package:doctor/screens/profile_screen.dart';
 import 'package:doctor/screens/signup_page.dart';
@@ -48,11 +49,12 @@ class MyApp extends StatelessWidget {
           '/': (context) => const LoginPage(),
           '/signup': (context) => const Signup(),
           '/home': (context) => const MainPage(),
-          '/count': (context) => const CounterPage(),
+          '/report': (context) => const InvestigationReport(),
           '/book': (context) => const AppointmentPage(),
           '/doctorPage': (context) => const DoctorPage(),
           '/profile': (context) => const ProfileScreen(),
           '/forgotPassword': (context) => const ForgotPassword(),
+          '/pdfReport': (context) => const PdfReport()
         },
       ),
     );

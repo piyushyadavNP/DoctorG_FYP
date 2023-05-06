@@ -1,18 +1,34 @@
+import 'dart:collection';
 import 'dart:developer';
 
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:doctor/constant/colors.dart';
 import 'package:flutter/material.dart';
 
 class DropDownField extends StatefulWidget {
   String? chosenValue;
+  bool isCategories;
   String? Function(String?)? onChanged;
-  DropDownField({Key? key, this.chosenValue, this.onChanged}) : super(key: key);
+  DropDownField(
+      {Key? key, this.chosenValue, this.onChanged, required this.isCategories})
+      : super(key: key);
 
   @override
   State<DropDownField> createState() => _DropDownFieldState();
 }
 
 class _DropDownFieldState extends State<DropDownField> {
+  final db = FirebaseFirestore.instance;
+  List<String>? dropDownValue;
+  @override
+  void initState() {
+    // TODO: implement initState
+    log("GetCategories $getCategories()");
+    dropDownValue = ["Male", "Female", "Other"];
+    widget.isCategories ? getCategories() : null;
+    super.initState();
+  }
+
   @override
   Widget build(BuildContext context) {
     return Column(
@@ -33,7 +49,7 @@ class _DropDownFieldState extends State<DropDownField> {
                 isExpanded: true,
                 iconEnabledColor: white,
                 style: const TextStyle(fontSize: 12, color: Colors.white),
-                items: <String>['Male', 'Female', 'Other']
+                items: dropDownValue!
                     .map<DropdownMenuItem<String>>((String value) {
                   return DropdownMenuItem<String>(
                     value: value,
@@ -45,8 +61,8 @@ class _DropDownFieldState extends State<DropDownField> {
                     ),
                   );
                 }).toList(),
-                hint: const Text(
-                  "Gender",
+                hint: Text(
+                  widget.isCategories ? "Specilization" : "Gender",
                   style: TextStyle(color: white, fontSize: 12),
                 ),
                 onChanged: widget.onChanged),
@@ -57,5 +73,26 @@ class _DropDownFieldState extends State<DropDownField> {
         )
       ],
     );
+  }
+
+  Future<void> getCategories() async {
+    CollectionReference _collectionRef =
+        FirebaseFirestore.instance.collection('categories');
+    // Get docs from collection reference
+    QuerySnapshot querySnapshot = await _collectionRef.get();
+    widget.isCategories ? dropDownValue!.clear() : dropDownValue;
+    // Get data from docs and convert map to List
+    // Extract the data from each document
+    // List<Map<String, dynamic>> usersList = [];
+    List<String> categoriesList = [];
+    for (var doc in querySnapshot.docs) {
+      Map<String, dynamic> data = doc.data() as Map<String, dynamic>;
+      // usersList.add(data);
+      categoriesList.add(data['label']);
+    }
+    setState(() {
+      dropDownValue = categoriesList;
+    });
+    log("Categories $dropDownValue");
   }
 }

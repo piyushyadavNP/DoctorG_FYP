@@ -7,6 +7,7 @@ import 'package:doctor/common/text_style.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import '../widget/button.dart';
+import '../widget/drop_down.dart';
 import '../widget/logo_container.dart';
 import '../widget/textField.dart';
 import 'login_page.dart';
@@ -31,7 +32,7 @@ class _DoctorSignupState extends State<DoctorSignup> {
   final _formKey = GlobalKey<FormState>();
   bool _isValidate = false;
   bool formIsValid = false;
-
+  String? categories;
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -158,14 +159,24 @@ class _DoctorSignupState extends State<DoctorSignup> {
                         return null;
                       },
                     ),
-                    CommonTextField(
-                      labelText: "Specilization",
-                      controller: _specialization,
-                      validator: (value) {
-                        if (value!.isEmpty) {
-                          return "Specialization Can't Be Empty";
-                        }
-                        return null;
+                    // CommonTextField(
+                    //   labelText: "Specilization",
+                    //   controller: _specialization,
+                    //   validator: (value) {
+                    //     if (value!.isEmpty) {
+                    //       return "Specialization Can't Be Empty";
+                    //     }
+                    //     return null;
+                    //   },
+                    // ),
+                    DropDownField(
+                      isCategories: true,
+                      chosenValue: categories,
+                      onChanged: (String? value) {
+                        setState(() {
+                          categories = value;
+                        });
+                        return categories;
                       },
                     ),
                     CommonTextField(
@@ -244,7 +255,7 @@ class _DoctorSignupState extends State<DoctorSignup> {
             "email": _emailController.text.trim(),
             "nmcNo": _nmcNo.text.trim(),
             "mobile": _mobile.text.trim(),
-            "specialization": _specialization.text.trim(),
+            "specialization": categories!.trim(),
             "visitingDays": _vistingDays.text.trim(),
             "isDoctor": true,
             "createdAt": DateTime.parse(Timestamp.now().toDate().toString()),

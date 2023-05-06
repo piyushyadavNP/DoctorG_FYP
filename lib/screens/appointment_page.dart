@@ -2,6 +2,7 @@ import 'dart:developer';
 
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:doctor/common/alert_info.dart';
+import 'package:doctor/constant/colors.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
@@ -142,7 +143,11 @@ class _AppointmentPageState extends State<AppointmentPage> {
     final date = DateFormat("yyyy-MM-dd").format(_selectedDay!);
     final todayDate = DateFormat("yyy-MM-dd").format(DateTime.now());
     if (dateTimeController.text.isEmpty) {
-      AlertInfo(message: "Missed To Select Time.").showInfo(context);
+      AlertInfo(
+              message: "Missed To Select Time.",
+              isSuccess: true,
+              backgroundColor: successAlert)
+          .showInfo(context);
       return;
     }
     if (!_selectedDay!.isBefore(DateTime.now())) {
@@ -155,16 +160,25 @@ class _AppointmentPageState extends State<AppointmentPage> {
           "doctorId": widget.doctorId,
           "symptoms": _symptomsController.text.trim(),
           "userName": user.displayName
-        }).then((value) =>
-            AlertInfo(message: "Appointment Booked").showInfo(context));
+        }).then((value) => AlertInfo(
+                message: "Appointment Booked",
+                isSuccess: true,
+                backgroundColor: successAlert)
+            .showInfo(context));
       } on FirebaseException catch (ex) {
         log(ex.toString());
-        AlertInfo(message: "Some Error Occured").showInfo(context);
+        AlertInfo(
+                message: "Some Error Occured", backgroundColor: shrineErrorRed)
+            .showInfo(context);
       } catch (ex) {
-        AlertInfo(message: "Some Error Occured").showInfo(context);
+        AlertInfo(
+                message: "Some Error Occured", backgroundColor: shrineErrorRed)
+            .showInfo(context);
       }
     } else {
-      AlertInfo(message: "Date Can't Be In Past").showInfo(context);
+      AlertInfo(
+              message: "Date Can't Be In Past", backgroundColor: shrineErrorRed)
+          .showInfo(context);
     }
   }
 }

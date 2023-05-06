@@ -1,6 +1,7 @@
 import 'package:doctor/screens/appointment_page.dart';
 import 'package:doctor/screens/counter_page.dart';
 import 'package:doctor/screens/homePage.dart';
+import 'package:doctor/screens/invstigation_report.dart';
 import 'package:flutter/material.dart';
 
 import '../constant/colors.dart';
@@ -17,8 +18,8 @@ class _MainPageState extends State<MainPage> with TickerProviderStateMixin {
   TabController? tabController;
   List<Widget> pages = [
     const HomePage(),
-    AppointmentPage(),
-    const CounterPage(),
+    const AppointmentPage(),
+    const InvestigationReport(),
   ];
   int currentIndex = 0;
 
@@ -63,9 +64,9 @@ class _MainPageState extends State<MainPage> with TickerProviderStateMixin {
                     color: white.withOpacity(0.4),
                   )),
               BottomNavigationBarItem(
-                  label: "Profile",
+                  label: "Report",
                   icon: Icon(
-                    Icons.person,
+                    Icons.medical_information,
                     color: white.withOpacity(0.4),
                   )),
             ],
