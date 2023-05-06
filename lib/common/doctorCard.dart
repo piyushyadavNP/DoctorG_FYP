@@ -31,6 +31,7 @@ class _DoctorCardState extends State<DoctorCard> {
   void initState() {
     // TODO: implement initState
     super.initState();
+    widget.query = "";
     stremQuery = db.collection('doctor').snapshots();
   }
 
@@ -58,14 +59,17 @@ class _DoctorCardState extends State<DoctorCard> {
       } else {
         stremQuery = db.collection('doctor').snapshots();
       }
-      log("Stremed Query, ${stremQuery!.first}");
     });
     return Scaffold(
       appBar: widget.doctorByCategory!
           ? AppBar(
               title: Text("${widget.specialization}"),
             )
-          : null,
+          : widget.query!.isEmpty && !widget.search!
+              ? AppBar(
+                  title: const Text("Available Doctors"),
+                )
+              : null,
       body: SafeArea(
         child: StreamBuilder<QuerySnapshot>(
             stream: stremQuery,
