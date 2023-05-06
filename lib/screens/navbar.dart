@@ -4,6 +4,7 @@ import 'package:doctor/screens/appointment_page.dart';
 import 'package:doctor/screens/counter_page.dart';
 import 'package:doctor/screens/homePage.dart';
 import 'package:doctor/screens/invstigation_report.dart';
+import 'package:doctor/screens/report_page.dart';
 import 'package:flutter/material.dart';
 
 import '../constant/colors.dart';
@@ -23,7 +24,7 @@ class _MainPageState extends State<MainPage> with TickerProviderStateMixin {
     DoctorCard(
       query: "",
     ),
-    const InvestigationReport(),
+    const ReportPage(),
   ];
   int currentIndex = 0;
 

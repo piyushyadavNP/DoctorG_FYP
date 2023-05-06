@@ -1,6 +1,7 @@
 import 'dart:developer';
 import 'dart:io';
 
+import 'package:auto_size_text/auto_size_text.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:doctor/common/alert_info.dart';
 import 'package:doctor/constant/colors.dart';
@@ -159,30 +160,36 @@ class _ProfileScreenState extends State<ProfileScreen>
               joinedDate!,
               style: AppTextStyle.subtitle1,
             ),
-            Row(
+            const SizedBox(
+              height: 20,
+            ),
+            Stack(
+              alignment: AlignmentDirectional.center,
               children: [
-                Padding(
-                  padding: const EdgeInsets.only(left: 20.0),
-                  child: Text(
-                    "Welcome!",
-                    style: AppTextStyle.headline3,
+                Positioned(
+                  top: 0,
+                  child: Padding(
+                    padding: const EdgeInsets.only(left: 20.0),
+                    child: Text(
+                      "Your Recent history",
+                      style: AppTextStyle.headline3,
+                    ),
                   ),
                 ),
-              ],
-            ),
-            Row(
-              children: [
-                Column(
-                  children: [
-                    Padding(
-                      padding: const EdgeInsets.only(left: 20.0),
-                      child: Text(
-                        "Your Recent history",
-                        style: AppTextStyle.headline3,
-                      ),
-                    ),
-                  ],
+                Padding(
+                  padding: const EdgeInsets.all(8.0),
+                  child: SizedBox(
+                    height: MediaQuery.of(context).size.height * 0.65,
+                    width: MediaQuery.of(context).size.width,
+                    child: InvestigationReport(),
+                  ),
                 ),
+                const Positioned(
+                    bottom: 0,
+                    child: AutoSizeText(
+                      "Eat Healthy , Stay Healthy",
+                      style: TextStyle(color: white, fontSize: 15),
+                    ))
               ],
             ),
             const SizedBox(

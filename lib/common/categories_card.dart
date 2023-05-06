@@ -1,5 +1,7 @@
+import 'package:auto_size_text/auto_size_text.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:doctor/common/doctorCard.dart';
+import 'package:doctor/constant/const.dart';
 import 'package:doctor/screens/invstigation_report.dart';
 import 'package:flutter/material.dart';
 
@@ -25,19 +27,30 @@ class CategoriesCard extends StatelessWidget {
                                       doctorByCategory: true,
                                       specialization: doc['label'],
                                     ))),
-                        child: Card(
-                          shape: RoundedRectangleBorder(
-                            borderRadius: BorderRadius.circular(15.0),
-                          ),
-                          child: Row(mainAxisSize: MainAxisSize.min, children: [
-                            SizedBox(
-                              height: 80,
-                              width: 100,
-                              child: ListTile(
-                                title: Text(doc['label']),
-                              ),
+                        child: SizedBox(
+                          width: MediaQuery.of(context).size.width * 0.32,
+                          child: Card(
+                            shape: RoundedRectangleBorder(
+                              borderRadius: BorderRadius.circular(15.0),
                             ),
-                          ]),
+                            child: Stack(
+                                alignment: AlignmentDirectional.center,
+                                children: [
+                                  Image.network(
+                                    categoriesLogo!,   
+                                    fit: BoxFit.contain,
+                                    color: Colors.white.withOpacity(0.4),
+                                    colorBlendMode: BlendMode.modulate,
+                                  ),
+                                  AutoSizeText(
+                                    doc['label'],
+                                    style: const TextStyle(
+                                        fontSize: 16,
+                                        fontWeight: FontWeight.bold),
+                                    maxLines: 1,
+                                  ),
+                                ]),
+                          ),
                         ),
                       ))
                   .toList(),

@@ -40,7 +40,7 @@ class _HomePageState extends State<HomePage> {
               style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
             ),
           ),
-          Container(height: 150, child: CategoriesCard()),
+          Container(height: 100, child: CategoriesCard()),
           const Text(
             "Available Doctors",
             style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),

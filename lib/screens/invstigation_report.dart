@@ -1,3 +1,5 @@
+import 'dart:developer';
+
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:doctor/common/pdf_report.dart';
 import 'package:firebase_auth/firebase_auth.dart';
@@ -17,42 +19,42 @@ class _InvestigationReportState extends State<InvestigationReport> {
   bool enabledForReport = true;
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      body: SafeArea(
-        child: SizedBox(
-          height: MediaQuery.of(context).size.height * 0.8,
-          child: StreamBuilder<QuerySnapshot>(
-              stream: db
-                  .collection('appointmentDetails')
-                  .where('userId', isEqualTo: user)
-                  .snapshots(),
-              builder: (context, snapshot) {
-                if (snapshot.hasData) {
-                  return ListView(
-                      children: snapshot.data!.docs.map(
-                    (doc) {
-                      Future.delayed(Duration.zero, () async {
-                        getReportDetails(doc['date']);
-                      });
+    return SizedBox(
+      height: MediaQuery.of(context).size.height * 0.8,
+      child: StreamBuilder<QuerySnapshot?>(
+          stream: db
+              .collection('appointmentDetails')
+              .where('userId', isEqualTo: user)
+              .snapshots(),
+          builder: (context, snapshot) {
+            log("Data" + snapshot.data.toString());
+            if (!snapshot.hasData) {
+              return const SizedBox(
+                child: Center(child: Text("No Reports Found")),
+              );
+            } else if (snapshot.hasData) {
+              return ListView(
+                  children: snapshot.data!.docs.map(
+                (doc) {
+                  Future.delayed(Duration.zero, () async {
+                    getReportDetails(doc['date']);
+                  });
 
-                      return Card(
-                        child: ListTile(
-                          enabled: enabledForReport,
-                          onTap: () =>
-                              Navigator.pushNamed(context, '/pdfReport'),
-                          trailing: subtitle,
-                          title: Text("Dr. " + doc['doctor']),
-                          subtitle: Text(doc['date'] + doc['time']),
-                        ),
-                      );
-                    },
-                  ).toList());
-                } else {
-                  return const CircularProgressIndicator();
-                }
-              }),
-        ),
-      ),
+                  return Card(
+                    child: ListTile(
+                      enabled: enabledForReport,
+                      onTap: () => Navigator.pushNamed(context, '/pdfReport'),
+                      trailing: subtitle,
+                      title: Text("Dr. " + doc['doctor']),
+                      subtitle: Text(doc['date'] + doc['time']),
+                    ),
+                  );
+                },
+              ).toList());
+            } else {
+              return const CircularProgressIndicator();
+            }
+          }),
     );
   }
 
