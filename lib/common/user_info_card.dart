@@ -4,10 +4,14 @@ import 'package:flutter/material.dart';
 class UserInfoCard extends StatelessWidget {
   bool? profileIcon;
   String? name;
+  String? specialization;
+  String? nmcNo;
 
   UserInfoCard({
     this.name,
     this.profileIcon,
+    this.specialization,
+    this.nmcNo,
     Key? key,
   }) : super(key: key);
 
@@ -50,17 +54,18 @@ class UserInfoCard extends StatelessWidget {
                           fontWeight: FontWeight.bold),
                     )
                   : Column(
-                      children: const [
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
                         Text(
-                          "Neurologist",
-                          style: TextStyle(
+                          specialization!,
+                          style: const TextStyle(
                               color: Colors.white,
                               fontSize: 15,
                               fontWeight: FontWeight.bold),
                         ),
                         Text(
-                          "NMC:1485623",
-                          style: TextStyle(
+                          "NMC: ${nmcNo!}",
+                          style: const TextStyle(
                               color: Colors.white,
                               fontSize: 15,
                               fontWeight: FontWeight.bold),

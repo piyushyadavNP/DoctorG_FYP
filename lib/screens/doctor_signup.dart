@@ -243,7 +243,7 @@ class _DoctorSignupState extends State<DoctorSignup> {
                   ],
                 ),
               ),
-              SizedBox(
+              const SizedBox(
                 height: 10,
               ),
               MaterialCommonButton(
@@ -254,7 +254,7 @@ class _DoctorSignupState extends State<DoctorSignup> {
                     DoctorSignup();
                   },
                   size: MediaQuery.of(context).size.width * 0.9),
-              SizedBox(
+              const SizedBox(
                 height: 15,
               ),
               Padding(

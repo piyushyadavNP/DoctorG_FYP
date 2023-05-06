@@ -14,8 +14,13 @@ class AppointmentPage extends StatefulWidget {
   final String? doctorName;
   final String? specialization;
   final String? doctorId;
+  final String? nmcNo;
   const AppointmentPage(
-      {Key? key, this.doctorName, this.specialization, this.doctorId})
+      {Key? key,
+      this.doctorName,
+      this.specialization,
+      this.doctorId,
+      this.nmcNo})
       : super(key: key);
 
   @override
@@ -46,7 +51,12 @@ class _AppointmentPageState extends State<AppointmentPage> {
         child: SafeArea(
           child: Column(
             children: [
-              UserInfoCard(name: widget.doctorName, profileIcon: false),
+              UserInfoCard(
+                name: widget.doctorName,
+                profileIcon: false,
+                specialization: widget.specialization,
+                nmcNo: widget.nmcNo,
+              ),
               const SizedBox(
                 height: 40,
                 child: Text("Select Your Date"),
