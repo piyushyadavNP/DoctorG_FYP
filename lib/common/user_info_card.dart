@@ -7,6 +7,7 @@ class UserInfoCard extends StatelessWidget {
   String? specialization = "";
   String? nmcNo;
   void Function(String)? onChanged;
+  double? height;
 
   UserInfoCard({
     this.name,
@@ -14,6 +15,7 @@ class UserInfoCard extends StatelessWidget {
     this.specialization,
     this.nmcNo,
     this.onChanged,
+    this.height,
     Key? key,
   }) : super(key: key);
 
@@ -26,7 +28,7 @@ class UserInfoCard extends StatelessWidget {
         elevation: 10,
         child: Container(
           width: MediaQuery.of(context).size.width,
-          height: MediaQuery.of(context).size.height / 4,
+          height: height,
           decoration: BoxDecoration(
               borderRadius: BorderRadius.circular(5.0),
               color: Theme.of(context).backgroundColor),

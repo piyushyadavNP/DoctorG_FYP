@@ -1,4 +1,5 @@
 import 'package:doctor/common/pdf_report.dart';
+import 'package:doctor/provider/TimeProvider.dart';
 import 'package:doctor/provider/counter.dart';
 import 'package:doctor/screens/appointment_page.dart';
 import 'package:doctor/screens/doctor_page.dart';
@@ -26,7 +27,9 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MultiProvider(
-      providers: [ChangeNotifierProvider.value(value: CountNumber())],
+      providers: [
+        ChangeNotifierProvider.value(value: TimeProvider()),
+      ],
       child: MaterialApp(
         debugShowCheckedModeBanner: false,
         title: 'Flutter Demo',
@@ -50,7 +53,7 @@ class MyApp extends StatelessWidget {
           '/signup': (context) => const Signup(),
           '/home': (context) => const MainPage(),
           '/report': (context) => const InvestigationReport(),
-          '/book': (context) => const AppointmentPage(),
+          '/book': (context) => AppointmentPage(),
           '/doctorPage': (context) => const DoctorPage(),
           '/profile': (context) => const ProfileScreen(),
           '/forgotPassword': (context) => const ForgotPassword(),

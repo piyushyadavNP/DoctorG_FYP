@@ -1,7 +1,6 @@
 import 'package:doctor/common/doctorCard.dart';
 import 'package:doctor/model/Doctors.dart';
 import 'package:doctor/screens/appointment_page.dart';
-import 'package:doctor/screens/counter_page.dart';
 import 'package:doctor/screens/homePage.dart';
 import 'package:doctor/screens/invstigation_report.dart';
 import 'package:doctor/screens/report_page.dart';

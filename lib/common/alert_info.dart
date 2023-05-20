@@ -4,15 +4,15 @@ import 'package:flutter/material.dart';
 class AlertInfo {
   final String? message;
   Color? backgroundColor;
-  bool? isSuccess = false;
-  AlertInfo({this.message, this.isSuccess, this.backgroundColor});
+  bool isSuccess;
+  AlertInfo({this.message, this.isSuccess = false, this.backgroundColor});
 
   ScaffoldFeatureController showInfo(BuildContext context) {
     return ScaffoldMessenger.of(context).showSnackBar(SnackBar(
       backgroundColor: backgroundColor,
       content: Row(
         children: [
-          isSuccess!
+          isSuccess
               ? const Icon(
                   Icons.thumb_up_sharp,
                   color: white,

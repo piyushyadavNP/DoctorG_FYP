@@ -33,6 +33,7 @@ class _DoctorPageState extends State<DoctorPage> {
           child: Column(
             children: [
               UserInfoCard(
+                height: MediaQuery.of(context).size.height / 6,
                 profileIcon: false,
                 specialization: specialization,
                 nmcNo: nmcNo,

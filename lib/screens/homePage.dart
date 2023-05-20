@@ -2,6 +2,7 @@ import 'dart:developer';
 
 import 'package:doctor/common/categories_card.dart';
 import 'package:doctor/common/doctorCard.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 
 import '../common/user_info_card.dart';
@@ -14,6 +15,15 @@ class HomePage extends StatefulWidget {
 }
 
 class _HomePageState extends State<HomePage> {
+  String? userName;
+
+  @override
+  void initState() {
+    // TODO: implement initState
+    super.initState();
+    userName = FirebaseAuth.instance.currentUser!.displayName;
+  }
+
   String? query = "";
   @override
   Widget build(BuildContext context) {
@@ -22,7 +32,8 @@ class _HomePageState extends State<HomePage> {
           child: Column(
         children: [
           UserInfoCard(
-            name: "Mamit",
+            height: MediaQuery.of(context).size.height / 4,
+            name: userName!.isNotEmpty ? userName : "",
             profileIcon: true,
             onChanged: (value) {
               setState(() {

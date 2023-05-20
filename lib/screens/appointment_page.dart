@@ -3,24 +3,29 @@ import 'dart:developer';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:doctor/common/alert_info.dart';
 import 'package:doctor/constant/colors.dart';
+import 'package:doctor/widget/appointment_time.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
+import 'package:provider/provider.dart';
 import 'package:table_calendar/table_calendar.dart';
 
 import '../common/user_info_card.dart';
+import '../provider/TimeProvider.dart';
 
 class AppointmentPage extends StatefulWidget {
   final String? doctorName;
   final String? specialization;
   final String? doctorId;
   final String? nmcNo;
-  const AppointmentPage(
+  String? selectedTime;
+  AppointmentPage(
       {Key? key,
       this.doctorName,
       this.specialization,
       this.doctorId,
-      this.nmcNo})
+      this.nmcNo,
+      this.selectedTime})
       : super(key: key);
 
   @override
@@ -35,7 +40,7 @@ class _AppointmentPageState extends State<AppointmentPage> {
   TimeOfDay _time = const TimeOfDay(hour: 7, minute: 15);
   TextEditingController dateTimeController = TextEditingController();
   TextEditingController _symptomsController = TextEditingController();
-
+  String? date;
   String? selectedTime;
   @override
   void initState() {
@@ -52,6 +57,7 @@ class _AppointmentPageState extends State<AppointmentPage> {
           child: Column(
             children: [
               UserInfoCard(
+                height: MediaQuery.of(context).size.height / 6,
                 name: widget.doctorName,
                 profileIcon: false,
                 specialization: widget.specialization,
@@ -77,6 +83,10 @@ class _AppointmentPageState extends State<AppointmentPage> {
                       _selectedDay = selectedDay;
                       _focusedDay = focusedDay;
                     });
+
+                    Provider.of<TimeProvider?>(context, listen: false)!
+                        .selectedDate(
+                            DateFormat("yyyy-MM-dd").format(_selectedDay!));
                   }
                 },
                 onFormatChanged: (format) {
@@ -97,15 +107,12 @@ class _AppointmentPageState extends State<AppointmentPage> {
               ),
               Text("${DateFormat("yyyy-MM-dd").format(_selectedDay!)}"),
               Container(
-                margin: const EdgeInsets.all(10),
-                child: TextFormField(
-                  readOnly: true,
-                  controller: dateTimeController,
-                  decoration: const InputDecoration(
-                      icon: Icon(Icons.timer), //icon of text field
-                      labelText: "Enter Time" //label text of field
-                      ),
-                  onTap: () => _selectTime(),
+                margin: const EdgeInsets.all(10.0),
+                height: MediaQuery.of(context).size.height * 0.2,
+                width: MediaQuery.of(context).size.width,
+                child: AppointmentTime(
+                  doctorId: widget.doctorId,
+                  dateSelected: context.read<TimeProvider>().dateSelected,
                 ),
               ),
               Container(
@@ -118,6 +125,7 @@ class _AppointmentPageState extends State<AppointmentPage> {
                       ),
                 ),
               ),
+              Text("${context.read<TimeProvider>().timeSelected}"),
               Container(
                 width: MediaQuery.of(context).size.width * 0.9,
                 margin: const EdgeInsets.all(10),
@@ -150,13 +158,20 @@ class _AppointmentPageState extends State<AppointmentPage> {
   void saveAppointmentDetails() async {
     final db = FirebaseFirestore.instance;
     final user = FirebaseAuth.instance.currentUser;
-    final date = DateFormat("yyyy-MM-dd").format(_selectedDay!);
+    date = DateFormat("yyyy-MM-dd").format(_selectedDay!);
     final todayDate = DateFormat("yyy-MM-dd").format(DateTime.now());
-    if (dateTimeController.text.isEmpty) {
+    final time = context.read<TimeProvider?>()!.timeSelected;
+    if (time.isEmpty) {
       AlertInfo(
               message: "Missed To Select Time.",
-              isSuccess: true,
-              backgroundColor: successAlert)
+              backgroundColor: shrineErrorRed)
+          .showInfo(context);
+      return;
+    }
+    if (date!.isEmpty) {
+      AlertInfo(
+              message: "Missed To Select Date.",
+              backgroundColor: shrineErrorRed)
           .showInfo(context);
       return;
     }
@@ -165,7 +180,7 @@ class _AppointmentPageState extends State<AppointmentPage> {
         await db.collection('appointmentDetails').add({
           "userId": user!.uid,
           "date": date,
-          "time": dateTimeController.text,
+          "time": context.read<TimeProvider>().timeSelected,
           "doctor": widget.doctorName,
           "doctorId": widget.doctorId,
           "symptoms": _symptomsController.text.trim(),
