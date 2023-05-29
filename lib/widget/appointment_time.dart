@@ -18,7 +18,7 @@ class AppointmentTime extends StatefulWidget {
 }
 
 class _AppointmentTimeState extends State<AppointmentTime> {
-  List<String> appointmentTime = [];
+  List<dynamic> appointmentTime = [];
   List availableTime = [];
 
   final db = FirebaseFirestore.instance;
@@ -40,6 +40,7 @@ class _AppointmentTimeState extends State<AppointmentTime> {
   @override
   Widget build(BuildContext context) {
     checkForBookedTime(context);
+    getAppointmentRange();
     return GridView.builder(
       gridDelegate: const SliverGridDelegateWithMaxCrossAxisExtent(
           maxCrossAxisExtent: 100, childAspectRatio: 3 / 2),
@@ -67,17 +68,17 @@ class _AppointmentTimeState extends State<AppointmentTime> {
     );
   }
 
-
-
   getAppointmentRange() async {
     log("Getting Appointment Range");
+    log("Doc ID,${widget.doctorId}");
+    FirebaseFirestore db = FirebaseFirestore.instance;
     try {
       await db.collection("doctor").doc(widget.doctorId).get().then((value) {
         setState(() {
           if (value.data() != null) {
-            generateTimeRange(value.data()!['vistingTime']);
+            appointmentTime = generateTimeRange(value.data()!['vistingTime']);
           } else {
-            generateTimeRange("10:00-16:00");
+            appointmentTime = generateTimeRange("10:00-16:00");
           }
         });
         // log(value.data()!['vistingTime']);
@@ -88,8 +89,9 @@ class _AppointmentTimeState extends State<AppointmentTime> {
   }
 
   checkForBookedTime(BuildContext context) async {
-    getAppointmentRange();
     log("Checking If Time Slot is Taken");
+
+    if (!mounted) {}
     onDateSelected = Provider.of<TimeProvider>(context, listen: false);
     List appointmentTimeCopy = [];
     try {

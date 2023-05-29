@@ -1,5 +1,6 @@
 import 'package:doctor/common/appointment_list.dart';
 import 'package:doctor/common/user_info_card.dart';
+import 'package:doctor/screens/invstigation_report.dart';
 import 'package:flutter/material.dart';
 
 class DoctorPage extends StatefulWidget {

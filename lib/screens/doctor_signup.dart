@@ -310,6 +310,7 @@ class _DoctorSignupState extends State<DoctorSignup> {
             "specialization": categories!.trim(),
             "visitingHospital": _vistingHospital.text.trim(),
             "isDoctor": true,
+            "vistingTime": "10:00-16:00",
             "createdAt": DateTime.parse(Timestamp.now().toDate().toString()),
           })
           .then((value) => AlertInfo(

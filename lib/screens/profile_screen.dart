@@ -39,7 +39,7 @@ class _ProfileScreenState extends State<ProfileScreen>
   void initState() {
     scrollController;
     getProfileImage();
-    getUserInfo();
+    // getUserInfo();
     TabController tabController = TabController(length: 2, vsync: this);
     super.initState();
   }
@@ -62,16 +62,16 @@ class _ProfileScreenState extends State<ProfileScreen>
     }
   }
 
-  Future getUserInfo() async {
-    await db.collection("users").doc(user!.uid).get().then((value) {
-      // Convert TimeStamp to DateTime
-      DateTime dt = (value['createdAt'] as Timestamp).toDate();
-      setState(() {
-        userName = value["name"].toString();
-        joinedDate = DateFormat('MM/dd/yyyy').format(dt);
-      });
-    });
-  }
+  // Future getUserInfo() async {
+  //   await db.collection("users").doc(user!.uid).get().then((value) {
+  //     // Convert TimeStamp to DateTime
+  //     DateTime dt = (value['createdAt'] as Timestamp).toDate();
+  //     setState(() {
+  //       userName = value["name"].toString();
+  //       joinedDate = DateFormat('MM/dd/yyyy').format(dt);
+  //     });
+  //   });
+  // }
 
   @override
   void dispose() {

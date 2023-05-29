@@ -47,13 +47,8 @@ class _DoctorCardState extends State<DoctorCard> {
       } else if (widget.query!.isNotEmpty) {
         stremQuery = db
             .collection('doctor')
-            .where(
-              'name',
-              isGreaterThanOrEqualTo: widget.query!,
-              isLessThan: widget.query!.substring(0, widget.query!.length - 1) +
-                  String.fromCharCode(
-                      widget.query!.codeUnitAt(widget.query!.length - 1) + 1),
-            )
+            .where('name', isGreaterThanOrEqualTo: widget.query)
+            .where('name', isLessThanOrEqualTo: widget.query! + '\uf8ff')
             .snapshots();
         log("Search True");
       } else {

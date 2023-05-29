@@ -1,5 +1,5 @@
 // Getting the Time Range For Doctors
-generateTimeRange(String timeRange) {
+List<dynamic> generateTimeRange(String timeRange) {
   List appointmentTime = [];
   List<String> timeSlot = timeRange.split("-");
   DateTime start = DateTime.parse('2000-01-01T${timeSlot.first}:00Z');
@@ -16,4 +16,5 @@ generateTimeRange(String timeRange) {
     }
     appointmentTime.add(formattedTime);
   }
+  return appointmentTime;
 }

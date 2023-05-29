@@ -10,14 +10,15 @@ import 'package:intl/intl.dart';
 import 'package:provider/provider.dart';
 import 'package:table_calendar/table_calendar.dart';
 
+import '../common/time_range.dart';
 import '../common/user_info_card.dart';
 import '../provider/TimeProvider.dart';
 
 class AppointmentPage extends StatefulWidget {
-  final String? doctorName;
-  final String? specialization;
-  final String? doctorId;
-  final String? nmcNo;
+  String? doctorName;
+  String? specialization;
+  String? doctorId;
+  String? nmcNo;
   String? selectedTime;
   AppointmentPage(
       {Key? key,
@@ -83,7 +84,7 @@ class _AppointmentPageState extends State<AppointmentPage> {
                       _selectedDay = selectedDay;
                       _focusedDay = focusedDay;
                     });
-
+                    
                     Provider.of<TimeProvider?>(context, listen: false)!
                         .selectedDate(
                             DateFormat("yyyy-MM-dd").format(_selectedDay!));

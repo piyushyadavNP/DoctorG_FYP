@@ -57,7 +57,7 @@ class MyApp extends StatelessWidget {
           '/doctorPage': (context) => const DoctorPage(),
           '/profile': (context) => const ProfileScreen(),
           '/forgotPassword': (context) => const ForgotPassword(),
-          '/pdfReport': (context) => const PdfReport()
+          '/pdfReport': (context) => PdfReport()
         },
       ),
     );
