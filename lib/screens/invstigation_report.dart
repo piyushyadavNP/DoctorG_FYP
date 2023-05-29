@@ -27,7 +27,6 @@ class _InvestigationReportState extends State<InvestigationReport> {
               .where('userId', isEqualTo: user)
               .snapshots(),
           builder: (context, snapshot) {
-            log("Data" + snapshot.data.toString());
             if (!snapshot.hasData) {
               return const SizedBox(
                 child: Center(child: Text("No Reports Found")),
@@ -46,7 +45,7 @@ class _InvestigationReportState extends State<InvestigationReport> {
                       onTap: () => Navigator.pushNamed(context, '/pdfReport'),
                       trailing: subtitle,
                       title: Text("Dr. " + doc['doctor']),
-                      subtitle: Text(doc['date'] + doc['time']),
+                      subtitle: Text(doc['date'] + " " + doc['time']),
                     ),
                   );
                 },

@@ -72,7 +72,8 @@ class _LoginPageState extends State<LoginPage> {
                 textAlign: TextAlign.center,
                 text: TextSpan(children: [
                   TextSpan(
-                      text: 'New to doctorG? ', style: AppTextStyle.subtitle2),
+                      text: 'New to Medical Appointment System? ',
+                      style: AppTextStyle.subtitle2),
                   TextSpan(
                       recognizer: TapGestureRecognizer()
                         ..onTap = () {

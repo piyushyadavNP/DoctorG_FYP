@@ -25,7 +25,7 @@ class LogoName extends StatelessWidget {
         Padding(
           padding: const EdgeInsets.only(left: 8.0),
           child: Text(
-            "doctorG",
+            "Medical Appointment System",
             softWrap: true,
             style: TextStyle(
                 fontSize: textSize,

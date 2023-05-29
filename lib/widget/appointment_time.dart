@@ -6,6 +6,8 @@ import 'package:doctor/provider/TimeProvider.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
+import '../common/time_range.dart';
+
 class AppointmentTime extends StatefulWidget {
   final String? doctorId;
   final String? dateSelected;
@@ -30,7 +32,6 @@ class _AppointmentTimeState extends State<AppointmentTime> {
   @override
   void initState() {
     super.initState();
-    getAppointmentRange();
     isDisabled = false;
     chipColor = Colors.blue;
     timeSelected = "0.0";
@@ -41,7 +42,7 @@ class _AppointmentTimeState extends State<AppointmentTime> {
     checkForBookedTime(context);
     return GridView.builder(
       gridDelegate: const SliverGridDelegateWithMaxCrossAxisExtent(
-          maxCrossAxisExtent: 80, childAspectRatio: 3 / 2),
+          maxCrossAxisExtent: 100, childAspectRatio: 3 / 2),
       shrinkWrap: true,
       itemCount: appointmentTime.length,
       itemBuilder: (BuildContext ctxt, int index) {
@@ -66,19 +67,7 @@ class _AppointmentTimeState extends State<AppointmentTime> {
     );
   }
 
-  // Getting the Time Range For Doctors
-  generateTimeRange(String timeRange) {
-    List<String> timeSlot = timeRange.split("-");
-    DateTime start = DateTime.parse('2000-01-01T${timeSlot.first}:00Z');
-    DateTime end = DateTime.parse('2000-01-01T${timeSlot.last}:00Z');
-    Duration interval = const Duration(minutes: 20);
-    while (start.isBefore(end) || start.isAtSameMomentAs(end)) {
-      String formattedTime =
-          '${start.hour.toString().padLeft(2, '0')}:${start.minute.toString().padLeft(2, '0')}';
-      start = start.add(interval);
-      appointmentTime.add(formattedTime);
-    }
-  }
+
 
   getAppointmentRange() async {
     log("Getting Appointment Range");
@@ -91,7 +80,7 @@ class _AppointmentTimeState extends State<AppointmentTime> {
             generateTimeRange("10:00-16:00");
           }
         });
-        log(value.data()!['vistingTime']);
+        // log(value.data()!['vistingTime']);
       });
     } catch (ex) {
       log(ex.toString());
@@ -99,17 +88,20 @@ class _AppointmentTimeState extends State<AppointmentTime> {
   }
 
   checkForBookedTime(BuildContext context) async {
+    getAppointmentRange();
     log("Checking If Time Slot is Taken");
     onDateSelected = Provider.of<TimeProvider>(context, listen: false);
+    List appointmentTimeCopy = [];
     try {
       List data = await db.collection("appointmentDetails").get().then(
           (value) => value.docs
               .where((item) => widget.doctorId == item['doctorId'])
               .toList());
       for (var item in data) {
-        log(item['date']);
+        // log(item['date']);
         if (onDateSelected!.dateSelected == item['date']) {
-          appointmentTime.remove(item['time']);
+          appointmentTimeCopy = appointmentTime;
+          appointmentTimeCopy.remove(item['time']);
         }
       }
     } on FirebaseFirestore catch (e) {
