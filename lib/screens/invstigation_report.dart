@@ -73,7 +73,7 @@ class _InvestigationReportState extends State<InvestigationReport> {
                         }
                       },
                       trailing: subtitle,
-                      title: Text("Dr. " + doc['doctor']),
+                      title: Text(doc['doctor']),
                       subtitle: Text(doc['date'] + " " + doc['time']),
                     ),
                   );
@@ -88,13 +88,13 @@ class _InvestigationReportState extends State<InvestigationReport> {
 
   getReportDetails(String date) {
     DateTime appointmentDate = DateTime.parse(date);
-    if (appointmentDate.compareTo(DateTime.now()) > 0) {
+    if (appointmentDate.compareTo(DateTime.now()) >= 1) {
       setState(() {
         subtitle = const Text(
           "Upcoming",
           style: TextStyle(color: Colors.green),
         );
-        enabledForReport = true;
+        enabledForReport = false;
       });
     }
   }

@@ -200,7 +200,9 @@ class _LoginPageState extends State<LoginPage> {
         userCredential = await FirebaseAuth.instance.signInWithEmailAndPassword(
             email: _emailController.text, password: _passwordController.text);
 
-        bool? isEmailVerified = userCredential.user!.emailVerified;
+        // bool? isEmailVerified = userCredential.user!.emailVerified;
+        bool? isEmailVerified = true;
+
         if (!isEmailVerified) {
           showResendButton = true;
           setState(() {

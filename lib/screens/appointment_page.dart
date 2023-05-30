@@ -84,7 +84,7 @@ class _AppointmentPageState extends State<AppointmentPage> {
                       _selectedDay = selectedDay;
                       _focusedDay = focusedDay;
                     });
-                    
+
                     Provider.of<TimeProvider?>(context, listen: false)!
                         .selectedDate(
                             DateFormat("yyyy-MM-dd").format(_selectedDay!));
@@ -156,6 +156,25 @@ class _AppointmentPageState extends State<AppointmentPage> {
     }
   }
 
+  Future<bool> getAppointmentDate() async {
+    String? date = "";
+    final db = FirebaseFirestore.instance;
+    final user = FirebaseAuth.instance.currentUser;
+    await db
+        .collection("appointmentDetails")
+        .where('userId', isEqualTo: user!.uid)
+        .get()
+        .then((value) {
+      date = value.docs.first.data()['date'];
+    });
+    log("getAppointmentDate, $date");
+    DateTime appointmentDate = DateTime.parse(date!);
+    if (appointmentDate.compareTo(DateTime.now()) >= 1) {
+      return true;
+    }
+    return false;
+  }
+
   void saveAppointmentDetails() async {
     final db = FirebaseFirestore.instance;
     final user = FirebaseAuth.instance.currentUser;
@@ -176,21 +195,34 @@ class _AppointmentPageState extends State<AppointmentPage> {
           .showInfo(context);
       return;
     }
+    if (await getAppointmentDate()) {
+      AlertInfo(
+              message: "You have already a Booking.",
+              backgroundColor: shrineErrorRed)
+          .showInfo(context);
+      Future.delayed(const Duration(seconds: 2))
+          .then((value) => Navigator.pop(context));
+      return;
+    }
     if (!_selectedDay!.isBefore(DateTime.now())) {
       try {
-        await db.collection('appointmentDetails').add({
-          "userId": user!.uid,
-          "date": date,
-          "time": context.read<TimeProvider>().timeSelected,
-          "doctor": widget.doctorName,
-          "doctorId": widget.doctorId,
-          "symptoms": _symptomsController.text.trim(),
-          "userName": user.displayName
-        }).then((value) => AlertInfo(
-                message: "Appointment Booked",
-                isSuccess: true,
-                backgroundColor: successAlert)
-            .showInfo(context));
+        await db
+            .collection('appointmentDetails')
+            .add({
+              "userId": user!.uid,
+              "date": date,
+              "time": context.read<TimeProvider>().timeSelected,
+              "doctor": widget.doctorName,
+              "doctorId": widget.doctorId,
+              "symptoms": _symptomsController.text.trim(),
+              "userName": user.displayName
+            })
+            .then((value) => AlertInfo(
+                    message: "Appointment Booked",
+                    isSuccess: true,
+                    backgroundColor: successAlert)
+                .showInfo(context))
+            .then((value) => Navigator.pop(context));
       } on FirebaseException catch (ex) {
         log(ex.toString());
         AlertInfo(
