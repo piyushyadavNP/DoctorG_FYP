@@ -27,42 +27,40 @@ class _HomePageState extends State<HomePage> {
   String? query = "";
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      body: SafeArea(
-          child: Column(
-        children: [
-          UserInfoCard(
-            height: MediaQuery.of(context).size.height / 4,
-            name: userName!.isNotEmpty ? userName : "",
-            profileIcon: true,
-            onChanged: (value) {
-              setState(() {
-                query = value;
-              });
-            },
-          ),
-          const SizedBox(
-            height: 10,
-          ),
-          const Padding(
-            padding: EdgeInsets.all(8.0),
-            child: Text(
-              "Categories",
-              style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
-            ),
-          ),
-          Container(height: 100, child: CategoriesCard()),
-          const Text(
-            "Available Doctors",
+    return SafeArea(
+        child: Column(
+      children: [
+        UserInfoCard(
+          height: MediaQuery.of(context).size.height / 4,
+          name: userName!.isNotEmpty ? userName : "",
+          profileIcon: true,
+          onChanged: (value) {
+            setState(() {
+              query = value;
+            });
+          },
+        ),
+        const SizedBox(
+          height: 10,
+        ),
+        const Padding(
+          padding: EdgeInsets.all(8.0),
+          child: Text(
+            "Categories",
             style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
           ),
-          Flexible(
-              child: DoctorCard(
-            search: true,
-            query: query!,
-          )),
-        ],
-      )),
-    );
+        ),
+        Container(height: 100, child: CategoriesCard()),
+        const Text(
+          "Available Doctors",
+          style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
+        ),
+        Flexible(
+            child: DoctorCard(
+          search: true,
+          query: query!,
+        )),
+      ],
+    ));
   }
 }

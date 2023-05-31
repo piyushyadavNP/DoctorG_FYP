@@ -7,6 +7,7 @@ import 'package:doctor/screens/report_page.dart';
 import 'package:flutter/material.dart';
 
 import '../constant/colors.dart';
+import 'login_page.dart';
 
 class MainPage extends StatefulWidget {
   const MainPage({Key? key}) : super(key: key);
@@ -26,6 +27,7 @@ class _MainPageState extends State<MainPage> with TickerProviderStateMixin {
     const ReportPage(),
   ];
   int currentIndex = 0;
+  bool _canPop = false;
 
 // On Tap Navigation Items
   void onTap(int index) {
@@ -42,40 +44,69 @@ class _MainPageState extends State<MainPage> with TickerProviderStateMixin {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-        body: pages[currentIndex],
-        bottomNavigationBar: SafeArea(
-          child: BottomNavigationBar(
-            onTap: onTap,
-            type: BottomNavigationBarType.fixed,
-            backgroundColor: Theme.of(context).primaryColor,
-            currentIndex: currentIndex,
-            selectedItemColor: white,
-            unselectedItemColor: secondary,
-            selectedFontSize: 12,
-            unselectedFontSize: 12,
-            items: [
-              BottomNavigationBarItem(
-                  label: "Home",
-                  icon: Icon(
-                    Icons.home,
-                    color: white.withOpacity(0.4),
-                  )),
-              BottomNavigationBarItem(
-                  label: "Schedule",
-                  icon: Icon(
-                    Icons.calendar_month,
-                    color: white.withOpacity(0.4),
-                  )),
-              BottomNavigationBarItem(
-                  label: "Report",
-                  icon: Icon(
-                    Icons.medical_information,
-                    color: white.withOpacity(0.4),
-                  )),
+    return WillPopScope(
+      onWillPop: () async {
+        showDialog(
+          context: context,
+          builder: (context) => AlertDialog(
+            title: Text("Alert"),
+            content: Text("Are you sure you want to exit?"),
+            actions: [
+              TextButton(
+                onPressed: () {
+                  Navigator.of(context).pop();
+                },
+                child: Text("No"),
+              ),
+              TextButton(
+                onPressed: () {
+                  Navigator.pushReplacement(
+                      context,
+                      MaterialPageRoute(
+                          builder: (context) => const LoginPage()));
+                },
+                child: Text("Yes"),
+              ),
             ],
           ),
-        ));
+        );
+        return false;
+      },
+      child: Scaffold(
+          body: pages[currentIndex],
+          bottomNavigationBar: SafeArea(
+            child: BottomNavigationBar(
+              onTap: onTap,
+              type: BottomNavigationBarType.fixed,
+              backgroundColor: Theme.of(context).primaryColor,
+              currentIndex: currentIndex,
+              selectedItemColor: white,
+              unselectedItemColor: secondary,
+              selectedFontSize: 12,
+              unselectedFontSize: 12,
+              items: [
+                BottomNavigationBarItem(
+                    label: "Home",
+                    icon: Icon(
+                      Icons.home,
+                      color: white.withOpacity(0.4),
+                    )),
+                BottomNavigationBarItem(
+                    label: "Schedule",
+                    icon: Icon(
+                      Icons.calendar_month,
+                      color: white.withOpacity(0.4),
+                    )),
+                BottomNavigationBarItem(
+                    label: "Report",
+                    icon: Icon(
+                      Icons.medical_information,
+                      color: white.withOpacity(0.4),
+                    )),
+              ],
+            ),
+          )),
+    );
   }
 }
 
