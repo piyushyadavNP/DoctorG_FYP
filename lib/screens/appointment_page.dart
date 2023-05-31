@@ -169,8 +169,10 @@ class _AppointmentPageState extends State<AppointmentPage> {
         date = value.docs.first.data()['date'];
       });
       log("getAppointmentDate, $date");
+      String selectedDate = DateFormat("yyyy-MM-dd").format(_selectedDay!);
+      DateTime selectedDateFormat = DateTime.parse(selectedDate);
       DateTime appointmentDate = DateTime.parse(date!);
-      if (appointmentDate.compareTo(DateTime.now()) <= 1) {
+      if (selectedDateFormat.compareTo(appointmentDate) <= 0) {
         return true;
       }
     } catch (ex) {

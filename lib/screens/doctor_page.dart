@@ -16,7 +16,6 @@ class _DoctorPageState extends State<DoctorPage> {
   String? doctorName;
   String? specialization;
   String? nmcNo;
-  bool _canPop = false;
 
   @override
   void didChangeDependencies() {
@@ -35,14 +34,14 @@ class _DoctorPageState extends State<DoctorPage> {
           showDialog(
             context: context,
             builder: (context) => AlertDialog(
-              title: Text("Alert"),
-              content: Text("Are you sure you want to exit?"),
+              title: const Text("Alert"),
+              content: const Text("Are you sure you want to exit?"),
               actions: [
                 TextButton(
                   onPressed: () {
                     Navigator.popAndPushNamed(context, '/');
                   },
-                  child: Text("No"),
+                  child: const Text("No"),
                 ),
                 TextButton(
                   onPressed: () {
@@ -51,7 +50,7 @@ class _DoctorPageState extends State<DoctorPage> {
                         MaterialPageRoute(
                             builder: (context) => const LoginPage()));
                   },
-                  child: Text("Yes"),
+                  child: const Text("Yes"),
                 ),
               ],
             ),
