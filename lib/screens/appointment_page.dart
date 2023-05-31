@@ -157,20 +157,24 @@ class _AppointmentPageState extends State<AppointmentPage> {
   }
 
   Future<bool> getAppointmentDate() async {
-    String? date = "";
-    final db = FirebaseFirestore.instance;
-    final user = FirebaseAuth.instance.currentUser;
-    await db
-        .collection("appointmentDetails")
-        .where('userId', isEqualTo: user!.uid)
-        .get()
-        .then((value) {
-      date = value.docs.first.data()['date'];
-    });
-    log("getAppointmentDate, $date"); 
-    DateTime appointmentDate = DateTime.parse(date!);
-    if (appointmentDate.compareTo(DateTime.now()) <= 1) {
-      return true;
+    try {
+      String? date = "";
+      final db = FirebaseFirestore.instance;
+      final user = FirebaseAuth.instance.currentUser;
+      await db
+          .collection("appointmentDetails")
+          .where('userId', isEqualTo: user!.uid)
+          .get()
+          .then((value) {
+        date = value.docs.first.data()['date'];
+      });
+      log("getAppointmentDate, $date");
+      DateTime appointmentDate = DateTime.parse(date!);
+      if (appointmentDate.compareTo(DateTime.now()) <= 1) {
+        return true;
+      }
+    } catch (ex) {
+      log(ex.toString());
     }
     return false;
   }
