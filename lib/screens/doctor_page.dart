@@ -53,17 +53,6 @@ class _DoctorPageState extends State<DoctorPage> {
           ),
         ),
       ),
-      floatingActionButton: Stack(
-        children: [
-          FloatingActionButton(
-            child: IconButton(
-              onPressed: () {},
-              icon: const Icon(Icons.menu),
-            ),
-            onPressed: () {},
-          ),
-        ],
-      ),
     );
   }
 }

@@ -167,9 +167,9 @@ class _AppointmentPageState extends State<AppointmentPage> {
         .then((value) {
       date = value.docs.first.data()['date'];
     });
-    log("getAppointmentDate, $date");
+    log("getAppointmentDate, $date"); 
     DateTime appointmentDate = DateTime.parse(date!);
-    if (appointmentDate.compareTo(DateTime.now()) >= 1) {
+    if (appointmentDate.compareTo(DateTime.now()) <= 1) {
       return true;
     }
     return false;
